@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
+import Footer from "./components/Footer"; // Your footer component
+import PrivacyPolicy from "./components/PrivacyPolicy";
+
 
 function App() {
   return (
@@ -17,7 +20,10 @@ function App() {
           {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+
         </Routes>
+        <Footer /> 
       </Router>
     </>
   );
