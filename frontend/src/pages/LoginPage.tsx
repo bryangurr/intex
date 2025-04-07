@@ -74,7 +74,14 @@ function LoginPage() {
       <div className="row">
         <div className="card border-0 shadow rounded-3 ">
           <div className="card-body p-4 p-sm-5">
-            <h1 style={{ color: "#2b183f", fontFamily: "cinzel" , fontSize: "3.25rem"}} className="text-center mb-4">
+            <h1
+              style={{
+                color: "#2b183f",
+                fontFamily: "cinzel",
+                fontSize: "3.25rem",
+              }}
+              className="text-center mb-4"
+            >
               CineNiche
             </h1>
             <h5 className="card-title text-center mb-5 fw-light fs-5">
@@ -130,6 +137,7 @@ function LoginPage() {
                 <button
                   className="btn btn-purple text-uppercase fw-bold"
                   type="submit"
+                  onClick={handleRegisterClick}
                 >
                   Register
                 </button>
