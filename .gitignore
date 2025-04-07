@@ -5,6 +5,7 @@
 /backend/Intex.API/*.suo
 /backend/Intex.API/.vs/
 /backend/Intex.API/*.log
+/backend/Intex.API/*.sqlite
 
 # React frontend
 /frontend/node_modules/
