@@ -1,22 +1,35 @@
 body {
-  background: #007bff;
-  background: linear-gradient(to right, #0062e6, #33aeff);
+  background: #2b183f;
+  background: linear-gradient(#1f2235, #6411ad);
+  color: #2b183f ;
 }
 
-.btn-login {
-  font-size: 0.9rem;
-  letter-spacing: 0.05rem;
-  padding: 0.75rem 1rem;
+.btn-purple {
+  background-color: #c700ff !important;
+  border-color: #c700ff !important;
+  color: #fff !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
-.btn-google {
-  color: white !important;
-  background-color: #ea4335 !important;
+.btn-purple:hover {
+  background-color: #6411ad !important;
+  border-color: #6411ad !important;
+  transform: translateY(-2px);
 }
 
-.btn-facebook {
-  color: white !important;
-  background-color: #3b5998 !important;
+.social-icon {
+  font-size: 1.5rem;
+  color: #c700ff;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    color 0.2s;
+}
+
+.social-icon:hover {
+  color: #6411ad;
+  transform: scale(1.2);
 }
 
 .card-body {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Identity.css";
 
 function Register() {
   // state variables for email and passwords
@@ -67,6 +68,7 @@ function Register() {
       <div className="row">
         <div className="card border-0 shadow rounded-3 ">
           <div className="card-body p-4 p-sm-5">
+           
             <h5 className="card-title text-center mb-5 fw-light fs-5">
               Register
             </h5>
@@ -107,7 +109,7 @@ function Register() {
 
               <div className="d-grid mb-2">
                 <button
-                  className="btn btn-primary btn-login text-uppercase fw-bold"
+                  className="btn btn-purple text-uppercase fw-bold"
                   type="submit"
                 >
                   Register
@@ -115,8 +117,8 @@ function Register() {
               </div>
               <div className="d-grid mb-2">
                 <button
-                  className="btn btn-primary btn-login text-uppercase fw-bold"
-                  onClick={handleLoginClick}
+                  className="btn btn-purple text-uppercase fw-bold"
+                  type="submit"
                 >
                   Go to Login
                 </button>
