@@ -10,6 +10,7 @@ namespace Intex.API.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            //Test
         }
     }
 }
