@@ -1,7 +1,0 @@
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.csproj.AssemblyReference.cache
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.AssemblyInfoInputs.cache
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.AssemblyInfo.cs
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.csproj.CoreCompileInputs.cache
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\bryan\Box\2025 Winter\intex\backend-v2\IntexAPI\IntexAPI\obj\Debug\net8.0\IntexAPI.MvcApplicationPartsAssemblyInfo.cache
