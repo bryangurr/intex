@@ -4,6 +4,18 @@
   padding: 2rem;
   text-align: center;
 }
+body {
+  background: linear-gradient(#1f2235, #6411ad);
+}
+.welcome-page body,
+.welcome-page html,
+.welcome-page #root {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
 
 .logo {
   height: 6em;
