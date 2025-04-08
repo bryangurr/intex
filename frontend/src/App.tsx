@@ -10,8 +10,7 @@ import Footer from "./components/Footer"; // Your footer component
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import MoviePage from "./pages/MoviePage";
 import AdminMoviePage from "./pages/AdminMoviePage";
-import MovieDetailPage from "./pages/MovieDetailPage";
-
+// import MovieDetailPage from "./pages/MovieDetailPage";
 
 function App() {
   return (
@@ -26,8 +25,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/movie/:id" element={<MovieDetailPage />} />
-
+          {/* <Route path="/movie/:id" element={<MovieDetailPage />} /> */}
         </Routes>
         <Footer />
       </Router>
