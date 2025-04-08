@@ -1,0 +1,15 @@
+bin/
+obj/
+
+.vs/
+*.suo
+*.user
+*.snl.docstates
+
+.idea/
+*.DotSettings.user
+
+*.log
+*.tlog
+
+appsettings.json
