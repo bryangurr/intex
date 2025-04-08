@@ -40,8 +40,8 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-      ? "https://yellow-stone-0c45d971e.6.azurestaticapps.net/login?useCookies=true"
-      : "https://yellow-stone-0c45d971e.6.azurestaticapps.net/login?useSessionCookies=true";
+      ? "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true"
+      : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true";
 
     try {
       const response = await fetch(loginUrl, {
