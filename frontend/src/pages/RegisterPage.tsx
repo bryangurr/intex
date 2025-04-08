@@ -39,7 +39,8 @@ function Register() {
       setError("");
       // post data to the /register api
       fetch(
-        "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true",
+        "https://localhost:5000/register?useCookies=true",
+        // "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true",
         {
           method: "POST",
           credentials: "include", // <== VERY important
