@@ -5,18 +5,28 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import { CartProvider } from "./context/CartContext";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import HomePage from "./pages/HomePage";
+import Footer from "./components/Footer"; // Your footer component
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import MoviePage from "./pages/MoviePage";
+
 
 function App() {
   return (
     <>
-        <Router>
-          <Routes>
+      <Router>
+        <Routes>
+          <Route path="/Home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviePage/>} />
+          {/* <Route path="/cart" element={<CartPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
 
-            {/* <Route path="/cart" element={<CartPage />} /> */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </Router>
+        </Routes>
+        <Footer /> 
+      </Router>
     </>
   );
 }

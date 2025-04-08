@@ -40,8 +40,10 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-      ? "https://localhost:5000/login?useCookies=true"
-      : "https://localhost:5000/login?useSessionCookies=true";
+      ? "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
+      : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
+    // ? "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true"  // Comment out for localhost testing
+    // : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true";  // Comment out for localhost testing
 
     try {
       const response = await fetch(loginUrl, {
@@ -74,6 +76,16 @@ function LoginPage() {
       <div className="row">
         <div className="card border-0 shadow rounded-3 ">
           <div className="card-body p-4 p-sm-5">
+            <h1
+              style={{
+                color: "#2b183f",
+                fontFamily: "cinzel",
+                fontSize: "3.25rem",
+              }}
+              className="text-center mb-4"
+            >
+              CineNiche
+            </h1>
             <h5 className="card-title text-center mb-5 fw-light fs-5">
               Sign In
             </h5>
@@ -117,7 +129,7 @@ function LoginPage() {
               </div>
               <div className="d-grid mb-2">
                 <button
-                  className="btn btn-primary btn-login text-uppercase fw-bold"
+                  className="btn btn-purple text-uppercase fw-bold"
                   type="submit"
                 >
                   Sign in
@@ -125,30 +137,17 @@ function LoginPage() {
               </div>
               <div className="d-grid mb-2">
                 <button
-                  className="btn btn-primary btn-login text-uppercase fw-bold"
+                  className="btn btn-purple text-uppercase fw-bold"
+                  type="submit"
                   onClick={handleRegisterClick}
                 >
                   Register
                 </button>
               </div>
               <hr className="my-4" />
-              <div className="d-grid mb-2">
-                <button
-                  className="btn btn-google btn-login text-uppercase fw-bold"
-                  type="button"
-                >
-                  <i className="fa-brands fa-google me-2"></i> Sign in with
-                  Google
-                </button>
-              </div>
-              <div className="d-grid mb-2">
-                <button
-                  className="btn btn-facebook btn-login text-uppercase fw-bold"
-                  type="button"
-                >
-                  <i className="fa-brands fa-facebook-f me-2"></i> Sign in with
-                  Facebook
-                </button>
+              <div className="text-center mt-4">
+                <i className="fa-brands fa-google social-icon me-3"></i>
+                <i className="fa-brands fa-facebook-f social-icon"></i>
               </div>
             </form>
             {error && <p className="error">{error}</p>}
