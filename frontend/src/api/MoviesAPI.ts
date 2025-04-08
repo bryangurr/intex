@@ -5,7 +5,7 @@ interface FetchMoviesResponse {
   totalNumMovies: number;
 }
 
-const API_URL = "https://localhost:5000/api/Movies"; // Replace with your actual .NET endpoint
+const API_URL = "https://localhost:5000/api/Movies/GetMovie?show_id=2"; // Replace with your actual .NET endpoint
 
 export const fetchMovies = async (
   pageSize: number,
