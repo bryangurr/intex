@@ -1,0 +1,53 @@
+/* This ensures the banner fills the screen without overflow */
+.welcome-band {
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: linear-gradient(#11131e, #262041);
+  z-index: 9999;
+}
+
+.logo {
+  font-family: "Georgia", serif;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.nav-link {
+  color: #ccc;
+  border-radius: 10px;
+  transition:
+    background-color 0.6s ease,
+    color 0.6s ease,
+    transform 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white;
+  background-color: #2b183f;
+  transform: scale(1.05); /* slight enlarge */
+}
+
+.profile-img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+/* WelcomeBand.css */
+.animate-expand {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scaleX(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
