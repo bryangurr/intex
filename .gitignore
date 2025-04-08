@@ -20,3 +20,9 @@
 /frontend/*.tsbuildinfo
 
 .vs/
+# Ignore SQLite runtime files
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
+
