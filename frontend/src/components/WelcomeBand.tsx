@@ -3,9 +3,13 @@ import "./WelcomeBand.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 // import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { useNavigate } from "react-router-dom";
+import Logout from "./Logout";
+import { AuthorizedUser } from "./AuthorizeView";
 
 function WelcomeBand() {
   const [showSearch, setShowSearch] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav
@@ -55,21 +59,68 @@ function WelcomeBand() {
         >
           <ul className="navbar-nav d-flex flex-row gap-4 mx-auto">
             <li className="nav-item">
-              <a className="nav-link fs-4 active" href="#">
+              <span
+                className="nav-link fs-4 active"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/movies`)}
+              >
                 Home
-              </a>
+              </span>
             </li>
             <li className="nav-item">
-              <a className="nav-link fs-4" href="#">
+              <span
+                className="nav-link fs-4 active"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/privacy`)}
+              >
                 About
-              </a>
+              </span>
             </li>
             <li className="nav-item">
-              <a className="nav-link fs-4" href="#">
+              <span
+                className="nav-link fs-4 active"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/admin`)}
+              >
                 Admin
-              </a>
+              </span>
             </li>
           </ul>
+        </div>
+        {/* Mobile profile dropdown */}
+        <div className="d-lg-none mt-3">
+          <hr className="text-white" />
+          <div className="dropdown align-items-center text-center">
+            <span className="text-white fs-5 fw-bold d-block mb-2">Name</span>
+            <img
+              src="frontend\public\profile.jpg"
+              alt="Profile"
+              className="rounded-circle"
+              style={{
+                width: "36px",
+                height: "36px",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            />
+            <ul className="dropdown-menu align-items-center">
+              <li className="dropdown-item-text fw-bold">Name</li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <button
+                  className="dropdown-item text-danger"
+                  onClick={() => console.log("Log out")}
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Right: Search + user info */}
@@ -102,13 +153,35 @@ function WelcomeBand() {
             </form>
           )}
 
-          <span className="text-white fs-5 fw-bold">Name</span>
-          <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
-            alt="Profile"
-            className="rounded-circle"
-            style={{ width: "36px", height: "36px", objectFit: "cover" }}
-          />
+          <div className="dropdown">
+            <img
+              src="frontend\public\profile.jpg"
+              alt="Profile"
+              className="rounded-circle"
+              style={{
+                width: "36px",
+                height: "36px",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            />
+            <ul className="dropdown-menu dropdown-menu-end align-items-center text-center">
+              <li className="dropdown-item-text fw-bold">Name</li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <button className="bg-secondary text-white border-0 rounded-3 px-3 py-2">
+                  <Logout>
+                    Logout <AuthorizedUser value="email" />
+                  </Logout>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
