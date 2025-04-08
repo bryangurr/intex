@@ -7,10 +7,10 @@ import WelcomeBand from "../components/WelcomeBand";
 import "../components/GenreCards.css";
 
 const mockMovies = [
-  { id: 1, title: "Skyfall", genre: "Action" },
-  { id: 2, title: "The Notebook", genre: "Romance" },
-  { id: 3, title: "Interstellar", genre: "Sci-Fi" },
-  { id: 4, title: "Inception", genre: "Thriller" },
+  { id: 1, title: "Personalized Recommendations", genre: "More of what you like" },
+  { id: 2, title: "Unique Movie Selection", genre: "Hard-to-find content" },
+  { id: 3, title: "Intuitive Interface", genre: "Easy to use Features" },
+  { id: 4, title: "Affordable Pricing", genre: "Your favorite movies and shows for $7.99/month" },
 ];
 
 function HomePage() {
@@ -64,9 +64,9 @@ function HomePage() {
         </button>
       </section>
       <br/>
-      Movie Carousel
+      {/* Carousel */}
       <section className="px-6 py-12">
-        <h3 className="text-2xl font-semibold mb-6 text-white">Popular Movies</h3>
+        <h3 className="text-2xl font-semibold mb-6 text-white">What CineNiche has to offer: </h3>
         <Slider {...settings}>
           {mockMovies.map((movie) => (
             <div
@@ -87,6 +87,10 @@ function HomePage() {
 
 {/* Genre Feature Section */}
 <section style={{ padding: '3rem 1.5rem' }}>
+<div style={{
+    maxWidth: '1200px',
+    margin: '0 auto'
+  }}>
   <h3 style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>
     Browse by Genre
   </h3>
@@ -173,14 +177,11 @@ function HomePage() {
       </div>
     ))}
   </div>
+  </div>
 </section>
-
-
 
       <br/><br/>
 
-
-      
     </div>
   );
 }
