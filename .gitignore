@@ -18,3 +18,5 @@
 /frontend/.vscode/
 /frontend/.DS_Store
 /frontend/*.tsbuildinfo
+
+.vs/
