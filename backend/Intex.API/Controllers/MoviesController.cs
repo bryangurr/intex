@@ -16,17 +16,20 @@ namespace Intex.API.Controllers
             _moviesContext = temp;
         }
 
-        [HttpGet]
-        public ActionResult<object> Get()
+        [HttpGet("GetFirst")]
+        public IActionResult Get()
         {
-            var result = new
-            {
-                MoviesTitles = _moviesContext.movies_titles.ToList(),
-                MoviesUsers = _moviesContext.movies_users.ToList(),
-                MoviesRatings = _moviesContext.movies_ratings.ToList()
-            };
-
+            var result = _moviesContext.movies_titles.FirstOrDefault();
             return Ok(result);
         }
+
+        [HttpGet("GetMovie")]
+        public IActionResult GetMovie(int show_id)
+        {
+            var movie = _moviesContext.movies_titles.Where(m => m.show_id == show_id);
+            return Ok(movie);
+
+        }
     }
+
 }
