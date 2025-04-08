@@ -8,5 +8,6 @@ export interface Movie {
   rating: string;
   duration: string;
   description: string;
-  genres: string[]; // cleaned up: ["Action", "Drama", "Anime Series"]
+  genre: string[]; // cleaned up: ["Action", "Drama", "Anime Series"]
+  rating_Avg: number;
 }

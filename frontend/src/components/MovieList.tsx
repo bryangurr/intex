@@ -45,7 +45,7 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
         key={movie.id}
         >
           <div className="d-flex justify-content-end flex-wrap p-2">
-            {movie.genres.map((genre) => (
+            {movie.genre.map((genre) => (
               <span
                 key={genre}
                 className="badge bg-secondary me-1 mb-1 text-truncate"

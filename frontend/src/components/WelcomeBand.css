@@ -1,10 +1,14 @@
 /* This ensures the banner fills the screen without overflow */
 .welcome-band {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: visible;
   box-sizing: border-box;
   background: linear-gradient(#11131e, #262041);
   z-index: 9999;
+}
+.dropdown-menu {
+  z-index: 99999 !important;
+  position: absolute !important;
 }
 
 .logo {

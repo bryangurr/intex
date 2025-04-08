@@ -26,7 +26,12 @@ function Logout(props: { children: React.ReactNode }) {
   };
 
   return (
-    <a className="logout" href="#" onClick={handleLogout}>
+    <a
+      className="logout text-white"
+      style={{ textDecoration: "none" }}
+      href="#"
+      onClick={handleLogout}
+    >
       {props.children}
     </a>
   );
