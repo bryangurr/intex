@@ -54,7 +54,7 @@ namespace Intex.API.Controllers
         [HttpGet("GetAllMovies")]
         public IActionResult GetAllMovies()
         {
-            var movies = _moviesContext.movies_titles.Take(2000).ToList();
+            var movies = _moviesContext.movies_titles.Take(20).ToList();
             return Ok(movies);
         }
         //[HttpGet("GetAllMoviesByGenre")]
