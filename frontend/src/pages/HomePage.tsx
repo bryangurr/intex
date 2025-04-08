@@ -64,7 +64,7 @@ function HomePage() {
         </button>
       </section>
       <br/>
-      {/* Movie Carousel */}
+      Movie Carousel
       <section className="px-6 py-12">
         <h3 className="text-2xl font-semibold mb-6 text-white">Popular Movies</h3>
         <Slider {...settings}>
@@ -116,6 +116,46 @@ function HomePage() {
         tagline: "Funny Adventures",
         image: "/images/The Other Guys.jpg",
       },
+      {
+        genre: "Action",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/SpiderMan 3.jpg",
+      },
+      {
+        genre: "Drama",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/The Pursuit of Happyness.jpg",
+      },
+      {
+        genre: "Musical",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/Les Misérables.jpg",
+      },
+      {
+        genre: "Fantasy",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/Stardust.jpg",
+      },
+      {
+        genre: "Horror",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/Coraline.jpg",
+      },
+      {
+        genre: "Romance",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/A Walk to Remember.jpg",
+      },
+      {
+        genre: "Thriller/Mystery",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/National Treasure.jpg",
+      },
+      {
+        genre: "Animation",
+        tagline: "Heart-Pounding Hits",
+        image: "/images/The Incredibles 2.jpg",
+      },
     ].map((genreCard) => (
       <div
         key={genreCard.genre}
@@ -140,25 +180,7 @@ function HomePage() {
       <br/><br/>
 
 
-      {/* Movie Grid */}
-      <section className="px-6 py-12">
-        <h3 className="text-2xl font-semibold mb-6 text-white">Other movies you might enjoy</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {mockMovies.map((movie) => (
-            <div
-              key={movie.id}
-              onClick={handleMovieClick}
-              className="bg-gray-800 rounded shadow p-4 cursor-pointer transition transform hover:scale-105 hover:shadow-xl"
-            >
-              <div className="h-40 bg-gray-700 rounded mb-3 flex items-center justify-center text-gray-300">
-                <i className="fas fa-film text-4xl"></i>
-              </div>
-              <h4 className="font-bold text-white text-center">{movie.title}</h4>
-              <p className="text-sm text-gray-400 text-center">{movie.genre}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      
     </div>
   );
 }
