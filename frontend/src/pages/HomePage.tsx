@@ -85,6 +85,48 @@ function HomePage() {
       </section>
       <br></br>
 
+
+      {/* Subscription Section */}
+<section style={{
+  backgroundColor: '#2d2d2d', // lighter than black
+  padding: '4rem 1.5rem',
+  color: '#fff',
+  textAlign: 'center'
+}}>
+  <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>
+      Unlock Unlimited Movies & Shows
+    </h2>
+    <p style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>
+      Subscribe now for just <strong>$7.99/month</strong> and enjoy a world of entertainment tailored just for you.
+    </p>
+    <button
+      className="subscribe-button"
+      style={{
+        backgroundColor: '#7c3aed', // vibrant purple
+        color: '#fff',
+        padding: '0.75rem 2rem',
+        fontSize: '1rem',
+        fontWeight: 600,
+        borderRadius: '0.375rem',
+        border: 'none',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease'
+      }}
+      onClick={() => {}}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#6b21a8')}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
+    >
+      Subscribe
+    </button>
+  </div>
+</section>
+
+  
+  
+        <br/><br/>
+
+
 {/* Genre Feature Section */}
 <section style={{ padding: '3rem 1.5rem' }}>
 <div style={{
