@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./WelcomeBand.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+// import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function WelcomeBand() {

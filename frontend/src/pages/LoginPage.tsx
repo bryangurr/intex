@@ -40,8 +40,10 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-      ? "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true"
-      : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true";
+      ? "https://localhost:5000/login?useCookies=true"
+      : "https://localhost:5000/login?useSessionCookies=true";
+    // ? "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true"
+    // : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true";
 
     try {
       const response = await fetch(loginUrl, {
