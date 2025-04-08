@@ -87,140 +87,136 @@ function HomePage() {
 
 
       {/* Subscription Section */}
-<section style={{
-  backgroundColor: '#2d2d2d', // lighter than black
-  padding: '4rem 1.5rem',
-  color: '#fff',
-  textAlign: 'center'
-}}>
-  <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>
-      Unlock Unlimited Movies & Shows
-    </h2>
-    <p style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>
-      Subscribe now for just <strong>$7.99/month</strong> and enjoy a world of entertainment tailored just for you.
-    </p>
-    <button
-      className="subscribe-button"
-      style={{
-        backgroundColor: '#7c3aed', // vibrant purple
+      <section style={{
+        backgroundColor: '#2d2d2d', // lighter than black
+        padding: '4rem 1.5rem',
         color: '#fff',
-        padding: '0.75rem 2rem',
-        fontSize: '1rem',
-        fontWeight: 600,
-        borderRadius: '0.375rem',
-        border: 'none',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease'
-      }}
-      onClick={() => {}}
-      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#6b21a8')}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
-    >
-      Subscribe
-    </button>
-  </div>
-</section>
-
-  
-  
-        <br/><br/>
-
-
-{/* Genre Feature Section */}
-<section style={{ padding: '3rem 1.5rem' }}>
-<div style={{
-    maxWidth: '1200px',
-    margin: '0 auto'
-  }}>
-  <h3 style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>
-    Browse by Genre
-  </h3>
-  <div style={{
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '1.5rem'
-  }}>
-    {[
-      {
-        genre: "Superhero",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/Avengers Infinity War.jpg",
-      },
-      {
-        genre: "Science Fiction",
-        tagline: "Exploring the Unknown",
-        image: "/images/Star Wars Episode VIII The Last Jedi.jpg",
-      },
-      {
-        genre: "High Fantasy",
-        tagline: "Epic Journeys",
-        image: "/images/The Lord of the Rings The Return of the King.jpg",
-      },
-      {
-        genre: "Comedy",
-        tagline: "Funny Adventures",
-        image: "/images/The Other Guys.jpg",
-      },
-      {
-        genre: "Action",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/SpiderMan 3.jpg",
-      },
-      {
-        genre: "Drama",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/The Pursuit of Happyness.jpg",
-      },
-      {
-        genre: "Musical",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/Les Misérables.jpg",
-      },
-      {
-        genre: "Fantasy",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/Stardust.jpg",
-      },
-      {
-        genre: "Horror",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/Coraline.jpg",
-      },
-      {
-        genre: "Romance",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/A Walk to Remember.jpg",
-      },
-      {
-        genre: "Thriller/Mystery",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/National Treasure.jpg",
-      },
-      {
-        genre: "Animation",
-        tagline: "Heart-Pounding Hits",
-        image: "/images/The Incredibles 2.jpg",
-      },
-    ].map((genreCard) => (
-      <div
-        key={genreCard.genre}
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>
+            Unlock Unlimited Movies & Shows
+          </h2>
+          <p style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>
+            Subscribe now for just <strong>$7.99/month</strong> and enjoy a world of entertainment tailored just for you.
+          </p>
+          <button
         onClick={handleLoginClick}
-        className="genre-card"
+        style={{
+          backgroundColor: '#7c3aed',
+          color: '#fff',
+          padding: '0.75rem 2rem',
+          fontSize: '1rem',
+          fontWeight: 600,
+          borderRadius: '0.375rem',
+          border: 'none',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease'
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#6b21a8')}
+        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
       >
-        <img
-          src={genreCard.image}
-          alt={genreCard.genre}
-        />
-        <div className="genre-card-overlay">
-          <h4 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>{genreCard.genre}</h4>
-          <p style={{ fontSize: '0.875rem', margin: 0 }}>{genreCard.tagline}</p>
+        Subscribe
+      </button>
+
         </div>
-      </div>
-    ))}
-  </div>
-  </div>
-</section>
+      </section>
+      <br/><br/>
+
+      {/* Genre Feature Section */}
+      <section style={{ padding: '3rem 1.5rem' }}>
+      <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
+        <h3 style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>
+          Browse by Genre
+        </h3>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '1.5rem'
+        }}>
+          {[
+            {
+              genre: "Superhero",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/Avengers Infinity War.jpg",
+            },
+            {
+              genre: "Science Fiction",
+              tagline: "Exploring the Unknown",
+              image: "/images/Star Wars Episode VIII The Last Jedi.jpg",
+            },
+            {
+              genre: "High Fantasy",
+              tagline: "Epic Journeys",
+              image: "/images/The Lord of the Rings The Return of the King.jpg",
+            },
+            {
+              genre: "Comedy",
+              tagline: "Funny Adventures",
+              image: "/images/The Other Guys.jpg",
+            },
+            {
+              genre: "Action",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/SpiderMan 3.jpg",
+            },
+            {
+              genre: "Drama",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/The Pursuit of Happyness.jpg",
+            },
+            {
+              genre: "Musical",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/Les Misérables.jpg",
+            },
+            {
+              genre: "Fantasy",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/Stardust.jpg",
+            },
+            {
+              genre: "Horror",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/Coraline.jpg",
+            },
+            {
+              genre: "Romance",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/A Walk to Remember.jpg",
+            },
+            {
+              genre: "Thriller/Mystery",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/National Treasure.jpg",
+            },
+            {
+              genre: "Animation",
+              tagline: "Heart-Pounding Hits",
+              image: "/images/The Incredibles 2.jpg",
+            },
+          ].map((genreCard) => (
+            <div
+              key={genreCard.genre}
+              onClick={handleLoginClick}
+              className="genre-card"
+            >
+              <img
+                src={genreCard.image}
+                alt={genreCard.genre}
+              />
+              <div className="genre-card-overlay">
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>{genreCard.genre}</h4>
+                <p style={{ fontSize: '0.875rem', margin: 0 }}>{genreCard.tagline}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        </div>
+      </section>
 
       <br/><br/>
 
