@@ -28,13 +28,29 @@ namespace Intex.API.Controllers
 
         }
 
-        [HttpGet("GetMovie")]
-        public IActionResult GetMovie(int show_id)
-        {
-            var movie = _moviesContext.movies_titles.Where(m => m.show_id == show_id);
-            return Ok(movie);
+        // [HttpGet("GetMovie")]
+        // public IActionResult GetMovie(int show_id)
+        // {
+        //     var movie = _moviesContext.movies_titles.Where(m => m.show_id == show_id);
+        //     return Ok(movie);
 
+        // }
+
+        [HttpGet("GetMovie/{show_id}")]
+        public IActionResult GetMovie(int show_id) {
+            try {
+            var movie = _moviesContext.movies_titles.Where(m => m.show_id == show_id).FirstOrDefault();
+            if (movie == null) {
+                return NotFound();
+            }
+            
+            return Ok(movie);
+            } catch (Exception err) {
+                Console.WriteLine("Whoops! There was an error: " + err);
+                return StatusCode(500, "Whoops! There was an error: " + err.Message);
+            }
         }
+
         [HttpGet("GetAllMovies")]
         public IActionResult GetAllMovies()
         {
