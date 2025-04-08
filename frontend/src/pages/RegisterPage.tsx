@@ -68,7 +68,6 @@ function Register() {
       <div className="row">
         <div className="card border-0 shadow rounded-3 ">
           <div className="card-body p-4 p-sm-5">
-           
             <h5 className="card-title text-center mb-5 fw-light fs-5">
               Register
             </h5>
@@ -119,6 +118,7 @@ function Register() {
                 <button
                   className="btn btn-purple text-uppercase fw-bold"
                   type="submit"
+                  onClick={handleLoginClick}
                 >
                   Go to Login
                 </button>
