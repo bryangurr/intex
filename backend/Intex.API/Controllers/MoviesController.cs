@@ -19,8 +19,13 @@ namespace Intex.API.Controllers
         [HttpGet("GetFirst")]
         public IActionResult Get()
         {
-            var result = _moviesContext.movies_titles.FirstOrDefault();
-            return Ok(result);
+            try {
+                var result = _moviesContext.movies_titles.FirstOrDefault();
+                return Ok(result);
+            } catch (Exception err) {
+                return StatusCode(500, "Oops! Internal Server Error: " + err.Message);
+            }
+
         }
 
         [HttpGet("GetMovie")]
