@@ -1,0 +1,82 @@
+.genre-filter {
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
+  opacity: 0.3;
+
+  /* Remove any left spacing */
+  margin-left: 0;
+  padding-left: 0;
+
+  /* Optional: shrink width if not needed full width */
+  width: 100%;
+}
+.genre-filter-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Style the dropdown */
+.genre-filter select.form-select {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s ease;
+
+  /* Restrict width */
+  max-width: 300px;
+  width: 100%;
+}
+
+/* Focus style */
+.genre-filter select.form-select:focus {
+  border-color: #8e2de2;
+  box-shadow: 0 0 0 0.2rem rgba(142, 45, 226, 0.25);
+}
+
+/* Chips container */
+.genre-filter .chip-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  /* Keep it aligned left */
+  justify-content: flex-start;
+  padding-left: 0;
+}
+
+/* Individual chip */
+.genre-filter .chip {
+  background-color: #8e2de2;
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  /* Prevent long chips from overflowing */
+  max-width: 100%;
+  flex-shrink: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Close (x) button inside chip */
+.genre-filter .chip .btn-close {
+  filter: invert(1);
+  margin-left: 0.5rem;
+  font-size: 0.6rem;
+  padding: 0.25rem;
+  opacity: 0.8;
+  flex-shrink: 0; /* Prevent button from shrinking awkwardly */
+}
+
+.genre-filter .chip .btn-close:hover {
+  opacity: 1;
+}

@@ -1,0 +1,75 @@
+/* GenreCards.css */
+
+/* SECTION CONTAINER */
+.genre-cards-section {
+    padding: 3rem 1.5rem;
+    background-color: #111; /* or keep it transparent if you prefer */
+  }
+  
+  /* SECTION TITLE */
+  .genre-cards-title {
+    text-align: center;
+    font-size: 1.5rem; /* = 24px */
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* GRID LAYOUT for the cards */
+  .genre-cards-grid {
+    display: grid;
+    /* show as many columns as fit, each at least 250px wide */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  /* EACH CARD */
+  .genre-card {
+    position: relative;
+    height: 350px; /* fixed height for uniform cards */
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #2d3748; /* fallback background */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* HOVER EFFECT */
+  .genre-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.75);
+  }
+  
+  /* IMAGE fills the card area */
+  .genre-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* preserve aspect ratio, cropping if needed */
+  }
+  
+  /* TEXT OVERLAY */
+  .genre-card-overlay {
+    position: absolute;
+    align-items: first baseline;;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 👈 move content to the top */
+    padding: 1rem;
+    color: #fff;
+  }
+  
+  
+  .genre-card-overlay p {
+    margin: 0;
+    font-size: 0.875rem; /* = 14px */
+  }
+  
+  .genre-card-overlay h4 {
+    margin: 0;
+    font-size: 1.25rem; /* = 20px */
+    font-weight: 700;
+  }
+  

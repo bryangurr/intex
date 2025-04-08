@@ -38,16 +38,21 @@ function Register() {
       // clear error message
       setError("");
       // post data to the /register api
-      fetch("https://localhost:5000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      })
+      fetch(
+        "https://localhost:5000/register?useCookies=true", // Comment out for deployment or testing server
+        // "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true", // Comment out for localhost testing
+        {
+          method: "POST",
+          credentials: "include", // <== VERY important
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      )
         //.then((response) => response.json())
         .then((data) => {
           // handle success or error from the server
