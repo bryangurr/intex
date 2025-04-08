@@ -37,7 +37,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // Replace with your frontend URL
+            policy.WithOrigins(
+                "http://localhost:5173",     // Vite dev server
+                "http://localhost:3000",     // CRA or other port
+                "https://localhost:3000",    // If you're using HTTPS
+                "https://localhost:5173"     // Just in case
+            ) // Replace with your frontend URL
                 .AllowCredentials() // Required to allow cookies
                 .AllowAnyMethod()
                 .AllowAnyHeader();
@@ -55,6 +60,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
