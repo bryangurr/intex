@@ -35,6 +35,18 @@ namespace Intex.API.Controllers
             return Ok(movie);
 
         }
+        [HttpGet("GetAllMovies")]
+        public IActionResult GetAllMovies()
+        {
+            var movies = _moviesContext.movies_titles.Take(2000).ToList();
+            return Ok(movies);
+        }
+        //[HttpGet("GetAllMoviesByGenre")]
+        //public IActionResult GetAllMoviesByGenre(string genre)
+        //{
+        //    var movies = _moviesContext.movies_titles.Where(m => m.genre == genre).ToList();
+        //    return Ok(movies);
+        //}
     }
 
 }
