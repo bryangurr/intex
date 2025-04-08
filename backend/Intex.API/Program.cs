@@ -14,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+builder.Services.AddDbContext<MoviesDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MoviesConnection")));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
@@ -37,11 +39,18 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // Replace with your frontend URL
+            policy.WithOrigins(
+                "http://localhost:5173",     // Vite dev server
+                "http://localhost:3000",     // CRA or other port
+                "https://localhost:3000",    // If you're using HTTPS
+                "https://localhost:5173",     // Just in case
+                "https://yellow-stone-0c45d971e.6.azurestaticapps.net"
+            ) // Replace with your frontend URL
                 .AllowCredentials() // Required to allow cookies
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
+        
 });
 var app = builder.Build();
 
@@ -55,6 +64,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

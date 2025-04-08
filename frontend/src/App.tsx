@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer"; // Your footer component
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import MoviePage from "./pages/MoviePage";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/Home" element={<HomePage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviePage/>} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
