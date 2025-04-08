@@ -42,6 +42,7 @@ function Register() {
         "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true",
         {
           method: "POST",
+          credentials: "include", // <== VERY important
           headers: {
             "Content-Type": "application/json",
           },
