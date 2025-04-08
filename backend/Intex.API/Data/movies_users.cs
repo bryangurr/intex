@@ -1,7 +1,10 @@
-﻿namespace Intex.API.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Intex.API.Data
 {
     public class movies_users
     {
+        [Key]
         public int? user_id { get; set; }
         public string? name { get; set; }
         public string? phone { get; set; }

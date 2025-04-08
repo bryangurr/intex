@@ -1,8 +1,12 @@
-﻿namespace Intex.API.Data
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace Intex.API.Data
 {
     public class movies_titles
     {
-        public string? show_id { get; set; }
+        [Key]
+        public string show_id { get; set; }
         public string? type { get; set; }
         public string? title { get; set; }
         public string? director { get; set; }
