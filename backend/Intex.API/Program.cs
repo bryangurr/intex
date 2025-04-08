@@ -18,7 +18,7 @@ builder.Services.AddDbContext<MoviesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MoviesConnection")));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 
 builder.Services.AddAuthorization();
 
@@ -33,6 +33,12 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, CustomUserClaimsPrincipalFactory>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None; // Required for cross-origin
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Only send over HTTPS
+});
+
 
 builder.Services.AddCors(options =>
 {
@@ -45,6 +51,7 @@ builder.Services.AddCors(options =>
                 "https://localhost:3000",    // If you're using HTTPS
                 "https://localhost:5173",     // Just in case
                 "https://yellow-stone-0c45d971e.6.azurestaticapps.net",
+                "http://yellow-stone-0c45d971e.6.azurestaticapps.net",
                 "https://51.8.193.57",
                 "http://51.8.193.57"
             ) // Replace with your frontend URL
@@ -55,6 +62,18 @@ builder.Services.AddCors(options =>
         
 });
 var app = builder.Build();
+
+
+// 🔍 Show developer error pages if in dev or DetailedErrors = true. REMOVE BEFORE FULL DEPLOYMENT
+if (app.Environment.IsDevelopment() || app.Configuration.GetValue<bool>("DetailedErrors"))
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Error"); // or your fallback
+    app.UseHsts();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
