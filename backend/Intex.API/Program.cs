@@ -41,7 +41,8 @@ builder.Services.AddCors(options =>
                 "http://localhost:5173",     // Vite dev server
                 "http://localhost:3000",     // CRA or other port
                 "https://localhost:3000",    // If you're using HTTPS
-                "https://localhost:5173"     // Just in case
+                "https://localhost:5173",     // Just in case
+                "https://yellow-stone-0c45d971e.6.azurestaticapps.net"
             ) // Replace with your frontend URL
                 .AllowCredentials() // Required to allow cookies
                 .AllowAnyMethod()
