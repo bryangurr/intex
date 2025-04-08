@@ -42,7 +42,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
-        // WithOrigins(
+        // .WithOrigins(
         //         "http://localhost:5173",     // Vite dev server
         //         "http://localhost:3000",     // CRA or other port
         //         "https://localhost:3000",    // If you're using HTTPS

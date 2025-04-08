@@ -39,7 +39,7 @@ function Register() {
       setError("");
       // post data to the /register api
       fetch(
-        "https://yellow-stone-0c45d971e.6.azurestaticapps.net/register?useCookies=true",
+        "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true",
         {
           method: "POST",
           headers: {
