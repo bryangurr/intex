@@ -38,16 +38,19 @@ function Register() {
       // clear error message
       setError("");
       // post data to the /register api
-      fetch("https://localhost:5000/register?useCookies=true", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      })
+      fetch(
+        "https://yellow-stone-0c45d971e.6.azurestaticapps.net/register?useCookies=true",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      )
         //.then((response) => response.json())
         .then((data) => {
           // handle success or error from the server
