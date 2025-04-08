@@ -6,7 +6,7 @@ namespace Intex.API.Data
     public class movies_titles
     {
         [Key]
-        public string show_id { get; set; }
+        public int show_id { get; set; }
         public string? type { get; set; }
         public string? title { get; set; }
         public string? director { get; set; }
@@ -14,7 +14,7 @@ namespace Intex.API.Data
         public string? country { get; set; }
         public int? release_year { get; set; }
         public string? rating { get; set; }
-        public int? duration { get; set; }
+        public string? duration { get; set; }
         public string? description { get; set; }
         public int? Action { get; set; }
         public int? Adventure { get; set; }
@@ -48,5 +48,7 @@ namespace Intex.API.Data
         public int? TV_Dramas { get; set; }
         public int? Talk_Shows_TV_Comedies { get; set; }
         public int? Thrillers { get; set; }
+        public string? Genre { get; set; }
+        public decimal? Ratings_Avg { get; set; }
     }
 }
