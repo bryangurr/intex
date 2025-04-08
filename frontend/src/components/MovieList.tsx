@@ -5,17 +5,24 @@ import { Movie } from "../types/Movie";
 
 function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageNum, setPageNum] = useState<number>(1);
+
+  const [totalPages, setTotalPages] = useState<number>(0);
 
   const navigate = useNavigate();
+
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadMovies = async () => {
       try {
         setLoading(true);
-        const data = await fetchMovies(selectedGenres);
+        const data = await fetchMovies(pageSize, pageNum, selectedGenres);
+
         setMovies(data.movies);
+        setTotalPages(Math.ceil(data.totalNumMovies / pageSize));
       } catch (error) {
         setError((error as Error).message);
       } finally {
@@ -24,7 +31,7 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
     };
 
     loadMovies();
-  }, [selectedGenres]);
+  }, [pageSize, pageNum, selectedGenres]);
 
   if (loading) return <p>Loading movies...</p>;
   if (error) return <p className="text-danger">Error: {error}</p>;
@@ -32,7 +39,11 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   return (
     <>
       {movies.map((movie) => (
-        <div id="movieCard" className="card mb-3" key={movie.id}>
+        <div 
+        id="movieCard" 
+        className="card mb-3" 
+        key={movie.id}
+        >
           <div className="d-flex justify-content-end flex-wrap p-2">
             {movie.genres.map((genre) => (
               <span

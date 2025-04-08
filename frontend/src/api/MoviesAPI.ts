@@ -5,9 +5,11 @@ interface FetchMoviesResponse {
   totalNumMovies: number;
 }
 
-const API_URL = "https://your-backend-url/api/movies"; // Replace with your actual .NET endpoint
+const API_URL = "https://localhost:5000/api/Movies"; // Replace with your actual .NET endpoint
 
 export const fetchMovies = async (
+  pageSize: number,
+  pageNum: number,
   selectedGenres: string[]
 ): Promise<FetchMoviesResponse> => {
   try {
@@ -16,7 +18,7 @@ export const fetchMovies = async (
       .join("&");
 
     const response = await fetch(
-      `${API_URL}?pageSize=${selectedGenres.length ? `&${genreParams}` : ""}`
+      `${API_URL}?pageSize=${pageSize}&pageNum=${pageNum}&${selectedGenres.length ? `&${genreParams}` : ""}`
     );
 
     if (!response.ok) {
@@ -32,7 +34,7 @@ export const fetchMovies = async (
 
 export const addMovie = async (newMovie: Movie): Promise<Movie> => {
   try {
-    const response = await fetch(`${API_URL}`, {
+    const response = await fetch(`${API_URL}/AddMovie`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +58,7 @@ export const updateMovie = async (
   updatedMovie: Movie
 ): Promise<Movie> => {
   try {
-    const response = await fetch(`${API_URL}/${movieID}`, {
+    const response = await fetch(`${API_URL}/UpdateMovie/${movieID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +79,7 @@ export const updateMovie = async (
 
 export const deleteMovie = async (movieID: number): Promise<void> => {
   try {
-    const response = await fetch(`${API_URL}/${movieID}`, {
+    const response = await fetch(`${API_URL}/DeleteMovie/${movieID}`, {
       method: "DELETE",
     });
 
