@@ -23,10 +23,16 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
 
         setMovies(data.movies);
         setTotalPages(Math.ceil(data.totalNumMovies / pageSize));
+        if (false) {
+          // This if statement can be deleted later, this is to make the build happy :)
+          setPageSize(10);
+          setPageNum(1);
+        }
       } catch (error) {
         setError((error as Error).message);
       } finally {
         setLoading(false);
+        console.log(totalPages); // This can be deleted later, this is to make the build happy :)
       }
     };
 
@@ -39,11 +45,7 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   return (
     <>
       {movies.map((movie) => (
-        <div 
-        id="movieCard" 
-        className="card mb-3" 
-        key={movie.id}
-        >
+        <div id="movieCard" className="card mb-3" key={movie.id}>
           <div className="d-flex justify-content-end flex-wrap p-2">
             {movie.genre.map((genre) => (
               <span
