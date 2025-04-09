@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import { fetchMovies } from "../api/MoviesAPI";
+import { deleteMovie, fetchMovies } from "../api/MoviesAPI";
 import { Movie } from "../types/Movie";
 import "./MovieList.css";
 import NewMovieForm from "./NewMovieForm";
 import EditMovieForm from "./EditMovieForm";
+
 function AdminList({ selectedGenres }: { selectedGenres: string[] }) {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +30,21 @@ function AdminList({ selectedGenres }: { selectedGenres: string[] }) {
       setLoading(false);
     }
   }, [pageSize, pageNum, selectedGenres]);
+
+  const handleDelete = async (movie_id: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this movie?"
+    );
+    if (!confirmDelete) return;
+    try {
+      await deleteMovie(movie_id);
+      setMovies(movies.filter((movie) => movie.show_id !== movie_id));
+    } catch (error) {
+      alert("Failed to delete movie. Please try again.");
+      throw error;
+    }
+  };
+
   useEffect(() => {
     loadMovies();
   }, [loadMovies]);
@@ -98,7 +114,7 @@ function AdminList({ selectedGenres }: { selectedGenres: string[] }) {
                     </button>
                     <button
                       className="btn btn-danger btn-chip flex-fill ms-1"
-                      onClick={() => console.log("Delete", movie.show_id)}
+                      onClick={() => handleDelete(movie.show_id)}
                     >
                       Delete
                     </button>
