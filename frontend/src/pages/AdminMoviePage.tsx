@@ -3,7 +3,7 @@ import WelcomeBand from "../components/WelcomeBand";
 import GenreFilter from "../components/GenreFilter";
 import MovieList from "../components/MovieList";
 import "./MoviePage.css";
-import AuthorizeView from "../components/AuthorizeView";
+// import AuthorizeView from "../components/AuthorizeView"; // TODO -> Uncomment this and the other <AuthorizeView>s to force users to authenticate. 
 // import Logout from "../components/Logout";
 
 const AdminMoviePage = () => {
@@ -19,28 +19,28 @@ const AdminMoviePage = () => {
 
   return (
     <>
-      <AuthorizeView>
-        <WelcomeBand />
+      {/* <AuthorizeView> */}
+      <WelcomeBand />
 
-        <div className="container" style={{ paddingTop: "100px" }}>
-          <div className="row mt-2">
-            <div className="col-12 d-flex justify-content-center">
-              <div className="genre-filter-wrapper">
-                <GenreFilter
-                  selectedGenres={selectedGenres}
-                  onChange={setSelectedGenres}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="row mt-4">
-            <div className="col-12 d-flex justify-content-center">
-              <MovieList selectedGenres={selectedGenres} />
+      <div className="container" style={{ paddingTop: "100px" }}>
+        <div className="row mt-2">
+          <div className="col-12 d-flex justify-content-center">
+            <div className="genre-filter-wrapper">
+              <GenreFilter
+                selectedGenres={selectedGenres}
+                onChange={setSelectedGenres}
+              />
             </div>
           </div>
         </div>
-      </AuthorizeView>
+
+        <div className="row mt-4">
+          <div className="col-12 d-flex justify-content-center">
+            <MovieList selectedGenres={selectedGenres} />
+          </div>
+        </div>
+      </div>
+      {/* </AuthorizeView> */}
     </>
   );
 };
