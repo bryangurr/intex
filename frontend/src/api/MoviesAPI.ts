@@ -1,9 +1,9 @@
 import { Movie } from "../types/Movie";
 
-interface FetchMoviesResponse {
-  movies: Movie[];
-  totalNumMovies: number;
-}
+// interface FetchMoviesResponse {
+//   movies: Movie[];
+//   totalNumMovies: number;
+// }
 
 const API_URL = "https://localhost:5000/api/Movies/GetAllMovies"; // Replace with your actual .NET endpoint
 export const fetchMovies = async (
