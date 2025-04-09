@@ -2,7 +2,7 @@
 
 namespace Intex.API.Data
 {
-    public class recommendations
+    public class Recommendations
     {
         [Key]
         public int show_id { get; set; }

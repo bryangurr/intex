@@ -7,7 +7,7 @@ namespace Intex.API.Data
         public RecommendationsDbContext(DbContextOptions<RecommendationsDbContext> options) : base(options)
         {
         }
-        public DbSet<recommendations> recommendations { get; set; }
+        public DbSet<Recommendations> recommendations { get; set; }
        
     }
 }
