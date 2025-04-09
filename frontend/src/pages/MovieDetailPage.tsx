@@ -16,8 +16,8 @@ const MovieDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (!id) return;
-    // fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/RelatedCarousel/${id}`)
-    fetch(`https://localhost:5000/api/Movies/RelatedCarousel/${id}`)
+    fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/RelatedCarousel/${id}`)
+    // fetch(`https://localhost:5000/api/Movies/RelatedCarousel/${id}`)
       .then(res => res.json())
       .then(data => setRecommendations(data))
       .catch(err => console.error("Failed to load recommendations", err));
