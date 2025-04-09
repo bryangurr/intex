@@ -3,11 +3,26 @@ import { useParams } from "react-router-dom";
 import { Movie } from "../types/Movie"; // adjust path if needed
 import "../components/MovieDetailPage.css"; 
 import WelcomeBand from "../components/WelcomeBand";
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [recommendations, setRecommendations] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (!id) return;
+    // fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/RelatedCarousel/${id}`)
+    fetch(`https://localhost:5000/api/Movies/RelatedCarousel/${id}`)
+      .then(res => res.json())
+      .then(data => setRecommendations(data))
+      .catch(err => console.error("Failed to load recommendations", err));
+}, [id]);
+
 
 
   useEffect(() => {
@@ -38,13 +53,14 @@ const MovieDetailPage: React.FC = () => {
     return stars;
   };
   
-
-  // Image:
-  const posterSrc = `https://inteximages47.blob.core.windows.net/uploads/${movie.title}.jpg`;
-
-
-// TEMPORARY: Static image for testing layout
-// const posterSrc = "/images/Avengers Infinity War.jpg";
+  const sanitizeTitleForBlob = (title: string) => {
+    return title
+      .replace(/[^a-zA-Z0-9 ]/g, "")  // Remove special characters except space
+      .replace(/ /g, "%20");          // Replace each space (including doubles) with %20
+  };
+  
+  
+  const posterSrc = `https://inteximages47.blob.core.windows.net/uploads/${sanitizeTitleForBlob(movie.title)}.jpg`;
 
   return (
 
@@ -87,21 +103,50 @@ const MovieDetailPage: React.FC = () => {
 
   {/* Poster */}
   <div className="movie-poster">
-    <img src={posterSrc} alt={movie.title} className="poster-img" />
-  </div>
+  
+  <img
+  src={posterSrc}
+  alt={movie.title}
+  className="poster-img"
+  onError={(e) => {
+    e.currentTarget.onerror = null; // prevent infinite loop
+    e.currentTarget.src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwcIBwgHBwgHBwcICA4HBwcHBw8IDQcNFhEXFxURGBMZHCggGB4lHhYVITEhJSkrLi4uFx8zODMtNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIARMAtwMBIgACEQEDEQH/xAAaAAEBAQEBAQEAAAAAAAAAAAAABAMCBQEH/8QAMhABAAIBAgMFBgUFAQAAAAAAAAECEQMEITOCEhNBUVIUMWFykZIyoaKx4SJjcYHBU//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD8yAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUbbRreJvfjGcRGcZTrtnyuqQca+3pFJtSOzNYzMZzmEj0tSJml4jjM1mIj/AEi9n1vR+qAdbbRjUmbW/DHDEcMyp7jR9EfWXO1palbReMTNsxxy2Bn3Gj6I+sncaPoj6y0AZ9xo+iPrJ3Gj6I+stAEW50Y08Wr+GeGJ44lgu3VLXrWKRmYtmeOE3s+t6P1QDbQ29JpFrx2ptGYjOMQ43OhWkRenCM4muc4VacTFKRPCYrETH+me75XVAIQAAAAAAAAAF2z5XVKFds+V1SDYc6kzWlrR74rMwj9q1fOv2guGO21LalbTbGYtiMRhsAAAAAMdzqW06xNcZm2OMZT+1avnX7QXMd5yuqGmnM2pW0++axMs93yp+aAQgAAAAAAAAALtnyuqUK7Z8rqkGmrEzp3iOMzSYiI8eCDutX0X+2XogMNpW1aWi0TWe1njGPBuAAAAAMN3W1qVisTae1nhGfBL3Wr6L/bL0QHOlExp0ieExSImPLgz3nK6obMd3yuqAQgAAAAAAAAALtnyuqUK7Z8rqkGt57NLWj3xWZhJ7Xf00/NVq8u/yT+zzuzb02+gLtvqzqVmZiIxOODVPsomKWzEx/V4/wCFAAAAAMtxqzp1iYiJzOOLD2u/pp+bTeRM0riJn+rw/wAJOzbyt9AelSe1Stp981iWW85XVDTS5dPkj9me85XVAIQAAAAAAAAAF2z5XVKFds+V1SDYfL27NbW9/ZibY803tn9v9f8AAKhnoaveVmez2cTj35aAAAAADPX1e7rE47WZx78MfbP7f6/4BUx3nKn5oa0t2q1t7u1EWx5Mt5yuqAQgAAAAAAAAALtnyuqUK7Z8rqkHety9T5J/Z5z1DEeUfQE+y/Bb5v8AigAAAAAT738Ffm/4jeoYjyj6A40eXp/JH7ON5yp+aGzHecrqgEIAAAAAAAAAC7Z8rqlCs2domk18YnOPgDe09ms2n3ViZYe109N/yabi0V0r58YmsfGXng9HS1Y1ImYiYxOOLtLsrRi1PHPaiPNUAAAADjV1Y04iZiZzOODL2unpv+T5vbRitPHPamPJID06z2qxaPdMRLLecrqh1t7RbSpjwiKz8JZ7y0RSK+MznHwBGAAAAAAAAAARMxOYmYnwmJwAPtrWtxtM2n4zl8ACJxxjh8Ydd7qeu/3y5Add7qeu/wB8ne6nrv8AfLkB13up67/fJ3up/wCl/vlyATOeM8Z8ZkAH2trV41maz5xOHyZmZzMzM+czkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//Z";
+  }}
+/>
+</div>
 </div>
 
         </div>
 <br/><br/><br/>
         {/* 🔜 Carousel Placeholder */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-4">
-            If you liked <span className="text-indigo-400">{movie.title}</span>, you'll also like...
-          </h2>
-          <div className="h-40 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 italic">
-            (Recommendation carousel coming soon)
-          </div>
-        </div>
+  <h2 className="text-2xl font-bold mb-4">
+    If you liked <span className="text-indigo-400">{movie.title}</span>, you'll also like...
+  </h2>
+
+  <Slider
+    dots={true}
+    infinite={false}
+    speed={500}
+    slidesToShow={4}
+    slidesToScroll={1}
+  >
+    {recommendations.map((recId) => (
+      <div key={recId} className="px-2">
+        <a href={`/movies/${recId}`} className="block">
+          <img
+            src={`https://inteximages47.blob.core.windows.net/uploads/${recId}.jpg`}
+            alt={`Recommended movie ${recId}`}
+            className="rounded-lg w-full h-48 object-cover shadow-lg"
+            onError={(e) => {
+              e.currentTarget.src = "/default-movie.jpg"; // Optional fallback image
+            }}
+          />
+        </a>
+      </div>
+    ))}
+  </Slider>
+</div>
       </div>
     </div>
   );

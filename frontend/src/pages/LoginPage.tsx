@@ -150,8 +150,16 @@ function LoginPage() {
               </div>
               <hr className="my-4" />
               <div className="text-center mt-4">
+                <a href="https://play.google.com/store/apps/dev?id=7789761052013638919&hl=en_US"
+                  target="_blank"
+                  rel="noopener noreferrer">
                 <i className="fa-brands fa-google social-icon me-3"></i>
-                <i className="fa-brands fa-facebook-f social-icon"></i>
+                </a>
+                <a href="https://www.facebook.com/AngelStudios.inc/" 
+                  target="_blank" 
+                  rel="noopener noreferrer">
+                  <i className="fa-brands fa-facebook-f social-icon"></i>
+                </a>
               </div>
             </form>
             {error && <p className="error">{error}</p>}
