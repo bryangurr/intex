@@ -3,6 +3,8 @@ import WelcomeBand from "../components/WelcomeBand";
 import GenreFilter from "../components/GenreFilter";
 import MovieList from "../components/MovieList";
 import "./MoviePage.css";
+// import AuthorizeView from "../components/AuthorizeView"; // TODO -> Uncomment this and the other <AuthorizeView>s to force users to authenticate. 
+// import Logout from "../components/Logout";
 
 const AdminMoviePage = () => {
   useEffect(() => {
@@ -17,6 +19,7 @@ const AdminMoviePage = () => {
 
   return (
     <>
+      {/* <AuthorizeView> */}
       <WelcomeBand />
 
       <div className="container" style={{ paddingTop: "100px" }}>
@@ -37,6 +40,7 @@ const AdminMoviePage = () => {
           </div>
         </div>
       </div>
+      {/* </AuthorizeView> */}
     </>
   );
 };

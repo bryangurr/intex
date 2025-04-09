@@ -5,7 +5,8 @@ interface FetchMoviesResponse {
   totalNumMovies: number;
 }
 
-const API_URL = "https://localhost:5000/api/Movies/GetMovie?show_id=2"; // Replace with your actual .NET endpoint
+const API_URL =
+  "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetAllMovies"; // Replace with your actual .NET endpoint
 
 export const fetchMovies = async (
   pageSize: number,
@@ -17,15 +18,25 @@ export const fetchMovies = async (
       .map((g) => `genre=${encodeURIComponent(g)}`)
       .join("&");
 
-    const response = await fetch(
-      `${API_URL}?pageSize=${pageSize}&pageNum=${pageNum}&${selectedGenres.length ? `&${genreParams}` : ""}`
-    );
+    const query = new URLSearchParams({
+      pageSize: pageSize.toString(),
+      pageNum: pageNum.toString(),
+    });
+
+    const url = `${API_URL}?${query.toString()}${genreParams ? `&${genreParams}` : ""}`;
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Failed to fetch movies");
     }
 
-    return await response.json();
+    const json = await response.json();
+
+    // ⚠️ Adapt to raw array
+    return {
+      movies: Array.isArray(json) ? json : [],
+      totalNumMovies: 1000, // <-- arbitrary or approximate since backend isn’t returning it
+    };
   } catch (error) {
     console.error("Error fetching movies:", error);
     throw error;

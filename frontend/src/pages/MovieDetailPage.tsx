@@ -60,3 +60,4 @@ const MovieDetailPage: React.FC = () => {
 };
 
 export default MovieDetailPage;
+export default MovieDetailPage;

@@ -1,5 +1,5 @@
 export interface Movie {
-  id: number;
+  show_id: number;
   title: string;
   director: string;
   cast: string;
@@ -8,6 +8,6 @@ export interface Movie {
   rating: string;
   duration: string;
   description: string;
-  genre: string[]; // cleaned up: ["Action", "Drama", "Anime Series"]
-  ratings_Avg: number;
+  genre: string;
+  rating_Avg: number;
 }
