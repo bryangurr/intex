@@ -1,10 +1,28 @@
 ﻿using Intex.API.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Intex.API.Controllers
 {
+    public static class PredicateBuilder
+    {
+        public static Expression<Func<T, bool>> True<T>() => f => true;
+        public static Expression<Func<T, bool>> False<T>() => f => false;
+
+        public static Expression<Func<T, bool>> Or<T>(
+            this Expression<Func<T, bool>> expr1,
+            Expression<Func<T, bool>> expr2)
+        {
+            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters);
+            return Expression.Lambda<Func<T, bool>>(
+                Expression.OrElse(expr1.Body, invokedExpr), expr1.Parameters);
+        }
+    }
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -51,12 +69,64 @@ namespace Intex.API.Controllers
             }
         }
 
+        //[HttpGet("GetAllMovies")]
+        //public IActionResult GetAllMovies()
+        //{
+        //    var movies = _moviesContext.movies_titles.Take(20).ToList();
+        //    return Ok(movies);
+        //}
+
         [HttpGet("GetAllMovies")]
-        public IActionResult GetAllMovies()
+        public IActionResult GetAllMovies(
+    [FromQuery] int pageSize = 10,
+    [FromQuery] int pageNum = 1,
+    [FromQuery] List<string>? genre = null)
         {
-            var movies = _moviesContext.movies_titles.Take(20).ToList();
-            return Ok(movies);
+
+
+            if (pageSize <= 0 || pageNum <= 0)
+            {
+                return BadRequest("pageSize and pageNum must be greater than zero.");
+            }
+
+            var moviesQuery = _moviesContext.movies_titles.AsQueryable();
+
+            // Optional genre filter
+            if (genre != null && genre.Any())
+            {
+                var genreColumns = genre.Select(g => g.Replace(" ", "_")).ToList();
+
+                // Start with false (i.e., no filter)
+                var predicate = PredicateBuilder.False<movies_titles>();
+
+                foreach (var column in genreColumns)
+                {
+                    var col = column; // Prevent closure issue
+                    predicate = predicate.Or(m => EF.Property<int>(m, col) == 1);
+                }
+
+                moviesQuery = moviesQuery.Where(predicate);
+            }
+
+            // Total count BEFORE pagination
+            var totalNumMovies = moviesQuery.Count();
+
+            // Apply pagination
+            var pagedMovies = moviesQuery
+                .GroupBy(m => m.show_id)
+                .Select(g => g.First()) // keep the first movie in each group
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return Ok(new
+            {
+                movies = pagedMovies,
+                totalNumMovies = totalNumMovies
+            });
         }
+
+
         [HttpGet("GetMoviesByGenre")]
         public IActionResult GetMoviesByGenre(string genre)
         {
