@@ -138,67 +138,67 @@ function HomePage() {
           gap: '1.5rem'
         }}>
           {[
-            {
-              genre: "Superhero",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/Avengers Infinity War.jpg",
-            },
-            {
-              genre: "Science Fiction",
-              tagline: "Exploring the Unknown",
-              image: "/images/Star Wars Episode VIII The Last Jedi.jpg",
-            },
-            {
-              genre: "High Fantasy",
-              tagline: "Epic Journeys",
-              image: "/images/The Lord of the Rings The Return of the King.jpg",
-            },
-            {
-              genre: "Comedy",
-              tagline: "Funny Adventures",
-              image: "/images/The Other Guys.jpg",
-            },
-            {
-              genre: "Action",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/SpiderMan 3.jpg",
-            },
-            {
-              genre: "Drama",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/The Pursuit of Happyness.jpg",
-            },
-            {
-              genre: "Musical",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/Les Misérables.jpg",
-            },
-            {
-              genre: "Fantasy",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/Stardust.jpg",
-            },
-            {
-              genre: "Horror",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/Coraline.jpg",
-            },
-            {
-              genre: "Romance",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/A Walk to Remember.jpg",
-            },
-            {
-              genre: "Thriller/Mystery",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/National Treasure.jpg",
-            },
-            {
-              genre: "Animation",
-              tagline: "Heart-Pounding Hits",
-              image: "/images/The Incredibles 2.jpg",
-            },
-          ].map((genreCard) => (
+          {
+            genre: "Superhero",
+            tagline: "Avengers, Assemble for Action!",
+            image: "/images/Avengers Infinity War.jpg",
+          },
+          {
+            genre: "Science Fiction",
+            tagline: "The Force Awakens Again",
+            image: "/images/Star Wars Episode VIII The Last Jedi.jpg",
+          },
+          {
+            genre: "High Fantasy",
+            tagline: "One Quest to Rule Them All",
+            image: "/images/The Lord of the Rings The Return of the King.jpg",
+          },
+          {
+            genre: "Comedy",
+            tagline: "Laughs, Lies, and Law Enforcement",
+            image: "/images/The Other Guys.jpg",
+          },
+          {
+            genre: "Action",
+            tagline: "With Great Power Comes Epic Battles",
+            image: "/images/SpiderMan 3.jpg",
+          },
+          {
+            genre: "Drama",
+            tagline: "Hope, Hustle, and the Human Spirit",
+            image: "/images/The Pursuit of Happyness.jpg",
+          },
+          {
+            genre: "Musical",
+            tagline: "Revolution, Redemption, and Song",
+            image: "/images/Les Misérables.jpg",
+          },
+          {
+            genre: "Fantasy",
+            tagline: "Magic, Love, and Falling Stars",
+            image: "/images/Stardust.jpg",
+          },
+          {
+            genre: "Horror",
+            tagline: "A Coraline Nightmare You Won’t Forget",
+            image: "/images/Coraline.jpg",
+          },
+          {
+            genre: "Romance",
+            tagline: "Love That Defies the Odds",
+            image: "/images/A Walk to Remember.jpg",
+          },
+          {
+            genre: "Thriller/Mystery",
+            tagline: "Secrets Buried in American History",
+            image: "/images/National Treasure.jpg",
+          },
+          {
+            genre: "Animation",
+            tagline: "Super Family. Super Problems.",
+            image: "/images/The Incredibles 2.jpg",
+          },
+        ].map((genreCard) => (
             <div
               key={genreCard.genre}
               onClick={handleLoginClick}

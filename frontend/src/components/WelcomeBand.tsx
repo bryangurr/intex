@@ -10,6 +10,24 @@ import { AuthorizedUser } from "./AuthorizeView";
 function WelcomeBand() {
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `https://localhost:5000/api/Movies/Search?query=${encodeURIComponent(searchTerm)}`
+      );
+      const data = await response.json();
+
+      console.log("Search results:", data);
+      // Optionally, navigate to a results page or update state with search results
+      navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
+  };
 
   return (
     <nav
@@ -134,13 +152,18 @@ function WelcomeBand() {
           )}
 
           {showSearch && (
-            <form className="d-flex align-items-center gap-2 animate-expand">
+            <form
+              className="d-flex align-items-center gap-2 animate-expand"
+              onSubmit={handleSearch}
+            >
               <input
                 className="form-control"
                 type="search"
                 placeholder="Search movies..."
                 aria-label="Search"
                 style={{ minWidth: "200px" }}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button className="btn btn-outline-light" type="submit">
                 Go
