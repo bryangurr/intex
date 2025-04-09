@@ -3,11 +3,26 @@ import { useParams } from "react-router-dom";
 import { Movie } from "../types/Movie"; // adjust path if needed
 import "../components/MovieDetailPage.css"; 
 import WelcomeBand from "../components/WelcomeBand";
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [recommendations, setRecommendations] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (!id) return;
+    // fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/RelatedCarousel/${id}`)
+    fetch(`https://localhost:5000/api/Movies/RelatedCarousel/${id}`)
+      .then(res => res.json())
+      .then(data => setRecommendations(data))
+      .catch(err => console.error("Failed to load recommendations", err));
+}, [id]);
+
 
 
   useEffect(() => {
@@ -38,13 +53,14 @@ const MovieDetailPage: React.FC = () => {
     return stars;
   };
   
-
-  // Image:
-  const posterSrc = `https://inteximages47.blob.core.windows.net/uploads/${movie.title}.jpg`;
-
-
-// TEMPORARY: Static image for testing layout
-// const posterSrc = "/images/Avengers Infinity War.jpg";
+  const sanitizeTitleForBlob = (title: string) => {
+    return title
+      .replace(/[^a-zA-Z0-9 ]/g, "")  // Remove special characters except space
+      .replace(/ /g, "%20");          // Replace each space (including doubles) with %20
+  };
+  
+  
+  const posterSrc = `https://inteximages47.blob.core.windows.net/uploads/${sanitizeTitleForBlob(movie.title)}.jpg`;
 
   return (
 
@@ -87,21 +103,50 @@ const MovieDetailPage: React.FC = () => {
 
   {/* Poster */}
   <div className="movie-poster">
-    <img src={posterSrc} alt={movie.title} className="poster-img" />
-  </div>
+  
+  <img
+  src={posterSrc}
+  alt={movie.title}
+  className="poster-img"
+  onError={(e) => {
+    e.currentTarget.onerror = null; // prevent infinite loop
+    e.currentTarget.src = "https://t4.ftcdn.net/jpg/02/12/52/91/360_F_212529193_YRhcQCaJB9ugv5dFzqK25Uo9Ivm7B9Ca.jpg";
+  }}
+/>
+</div>
 </div>
 
         </div>
 <br/><br/><br/>
         {/* 🔜 Carousel Placeholder */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-4">
-            If you liked <span className="text-indigo-400">{movie.title}</span>, you'll also like...
-          </h2>
-          <div className="h-40 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 italic">
-            (Recommendation carousel coming soon)
-          </div>
-        </div>
+  <h2 className="text-2xl font-bold mb-4">
+    If you liked <span className="text-indigo-400">{movie.title}</span>, you'll also like...
+  </h2>
+
+  <Slider
+    dots={true}
+    infinite={false}
+    speed={500}
+    slidesToShow={4}
+    slidesToScroll={1}
+  >
+    {recommendations.map((recId) => (
+      <div key={recId} className="px-2">
+        <a href={`/movies/${recId}`} className="block">
+          <img
+            src={`https://inteximages47.blob.core.windows.net/uploads/${recId}.jpg`}
+            alt={`Recommended movie ${recId}`}
+            className="rounded-lg w-full h-48 object-cover shadow-lg"
+            onError={(e) => {
+              e.currentTarget.src = "/default-movie.jpg"; // Optional fallback image
+            }}
+          />
+        </a>
+      </div>
+    ))}
+  </Slider>
+</div>
       </div>
     </div>
   );
