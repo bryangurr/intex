@@ -320,6 +320,72 @@ namespace Intex.API.Controllers
         //            return StatusCode(500, "Internal Server Error: " + ex.Message);
         //        }
         //    }
+        [HttpPut("UpdateMovie/{show_id}")]
+        public IActionResult UpdateMovie(int show_id, [FromBody] movies_titles updatedMovie)
+        {
+            var existingMovie = _moviesContext.movies_titles.Find(show_id);
+
+            //if (existingMovie == null)
+            //{
+            //    return NotFound();
+            //}
+            existingMovie.type = updatedMovie.type;
+            existingMovie.title = updatedMovie.title;
+            existingMovie.director = updatedMovie.director;
+            existingMovie.cast = updatedMovie.cast;
+            existingMovie.country = updatedMovie.country;
+            existingMovie.release_year = updatedMovie.release_year;
+            existingMovie.rating = updatedMovie.rating;
+            existingMovie.duration = updatedMovie.duration;
+            existingMovie.description = updatedMovie.description;
+            existingMovie.Action = updatedMovie.Action;
+            existingMovie.Adventure = updatedMovie.Adventure;
+            existingMovie.Anime_Series_International_TV_Shows = updatedMovie.Anime_Series_International_TV_Shows;
+            existingMovie.British_TV_Shows_Docuseries_International_TV_Shows = updatedMovie.British_TV_Shows_Docuseries_International_TV_Shows;
+            existingMovie.Children = updatedMovie.Children;
+            existingMovie.Comedies = updatedMovie.Comedies;
+            existingMovie.Comedies_Dramas_International_Movies = updatedMovie.Comedies_Dramas_International_Movies;
+            existingMovie.Comedies_International_Movies = updatedMovie.Comedies_International_Movies;
+            existingMovie.Comedies_Romantic_Movies = updatedMovie.Comedies_Romantic_Movies;
+            existingMovie.Crime_TV_Shows_Docuseries = updatedMovie.Crime_TV_Shows_Docuseries;
+            existingMovie.Documentaries = updatedMovie.Documentaries;
+            existingMovie.Documentaries_International_Movies = updatedMovie.Documentaries_International_Movies;
+            existingMovie.Docuseries = updatedMovie.Docuseries;
+            existingMovie.Dramas = updatedMovie.Dramas;
+            existingMovie.Dramas_International_Movies = updatedMovie.Dramas_International_Movies;
+            existingMovie.Dramas_Romantic_Movies = updatedMovie.Dramas_Romantic_Movies;
+            existingMovie.Family_Movies = updatedMovie.Family_Movies;
+            existingMovie.Fantasy = updatedMovie.Fantasy;
+            existingMovie.Horror_Movies = updatedMovie.Horror_Movies;
+            existingMovie.International_Movies_Thrillers = updatedMovie.International_Movies_Thrillers;
+            existingMovie.International_TV_Shows_Romantic_TV_Shows_TV_Dramas = updatedMovie.International_TV_Shows_Romantic_TV_Shows_TV_Dramas;
+            existingMovie.Kids_TV = updatedMovie.Kids_TV;
+            existingMovie.Language_TV_Shows = updatedMovie.Language_TV_Shows;
+            existingMovie.Musicals = updatedMovie.Musicals;
+            existingMovie.Nature_TV = updatedMovie.Nature_TV;
+            existingMovie.Reality_TV = updatedMovie.Reality_TV;
+            existingMovie.Spirituality = updatedMovie.Spirituality;
+            existingMovie.TV_Action = updatedMovie.TV_Action;
+            existingMovie.TV_Comedies = updatedMovie.TV_Comedies;
+            existingMovie.TV_Dramas = updatedMovie.TV_Dramas;
+            existingMovie.Talk_Shows_TV_Comedies = updatedMovie.Talk_Shows_TV_Comedies;
+            existingMovie.Thrillers = updatedMovie.Thrillers;
+            existingMovie.Genre = updatedMovie.Genre;
+            existingMovie.Ratings_Avg = updatedMovie.Ratings_Avg;
+
+            _moviesContext.movies_titles.Update(existingMovie);
+            _moviesContext.SaveChanges();
+
+            return Ok(existingMovie);
+        }
+        [HttpPost("AddMovie")]
+        public IActionResult AddMovie([FromBody] movies_titles newMovie)
+        {
+            _moviesContext.movies_titles.Add(newMovie);
+            _moviesContext.SaveChanges();
+            return Ok(newMovie);
+        }
+
     }
 
 }
