@@ -3,8 +3,8 @@ import WelcomeBand from "../components/WelcomeBand";
 import GenreFilter from "../components/GenreFilter";
 import MovieList from "../components/MovieList";
 import "./MoviePage.css";
-import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
-import Logout from "../components/Logout";
+import AuthorizeView from "../components/AuthorizeView";
+// import Logout from "../components/Logout";
 
 const AdminMoviePage = () => {
   useEffect(() => {
