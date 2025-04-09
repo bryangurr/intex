@@ -1,20 +1,16 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace RootkitAuth.API.Data;
-
-public class NoOpEmailSender<TUser> : IEmailSender<TUser> where TUser : class
+namespace Intex.API.Data
 {
-    public Task SendConfirmationLinkAsync(TUser user, string email, string confirmationLink) =>
-        Task.CompletedTask;
-
-    public Task SendPasswordResetLinkAsync(TUser user, string email, string resetLink) =>
-        Task.CompletedTask;
-
-    public Task SendPasswordResetCodeAsync(TUser user, string email, string resetCode)
+    public class NoOpEmailSender<TUser> : IEmailSender<TUser> where TUser : class
     {
-        throw new NotImplementedException();
-    }
+        public Task SendConfirmationLinkAsync(TUser user, string email, string confirmationLink)
+            => Task.CompletedTask;
 
-    public Task SendEmailAsync(TUser user, string email, string subject, string htmlMessage) =>
-        Task.CompletedTask;
+        public Task SendPasswordResetLinkAsync(TUser user, string email, string resetLink)
+            => Task.CompletedTask;
+
+        public Task SendPasswordResetCodeAsync(TUser user, string email, string resetCode)
+            => Task.CompletedTask;
+    }
 }
