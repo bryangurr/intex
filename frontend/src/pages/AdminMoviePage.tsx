@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import WelcomeBand from "../components/WelcomeBand";
 import "./MoviePage.css";
-// import AuthorizeView from "../components/AuthorizeView"; // TODO -> Uncomment this and the other <AuthorizeView>s to force users to authenticate. 
-// import Logout from "../components/Logout";
+import AuthorizeView from "../components/AuthorizeView"; // TODO -> Uncomment this and the other <AuthorizeView>s to force users to authenticate. 
 import GenreFilterDropdown from "../components/GenreFilter";
 import AdminList from "../components/AdminList";
 
@@ -19,7 +18,7 @@ const AdminMoviePage = () => {
 
   return (
     <>
-      {/* <AuthorizeView> */}
+      <AuthorizeView>
       <WelcomeBand />
 
       <div className="container" style={{ paddingTop: "100px" }}>
@@ -40,7 +39,7 @@ const AdminMoviePage = () => {
           </div>
         </div>
       </div>
-      {/* </AuthorizeView> */}
+      </AuthorizeView>
     </>
   );
 };
