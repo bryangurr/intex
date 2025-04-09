@@ -36,6 +36,7 @@ namespace Intex.API.Controllers
             _moviesContext = moviesContext;
             _recommendContext = recommendationContext;
             _userRecommendationsContext = userRecommendationsContext;
+            Console.WriteLine("[DEBUG] MoviesController Initialized");
         }
 
 
@@ -224,7 +225,7 @@ namespace Intex.API.Controllers
             {
                 Console.WriteLine($"[ERROR] Exception in GetRelatedShows({showId}): {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return StatusCode(500, "An error occurred while processing your request: " + ex.Message + " ------ " + ex.StackTrace);
             }
         }
 
