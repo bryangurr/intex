@@ -152,31 +152,6 @@ namespace Intex.API.Controllers
             });
         }
 
-        // [HttpGet("RelatedCarousel/{showId}")]
-        // public async Task<IActionResult> GetRelatedShows(int showId)
-        // {
-        //     // This DbContext should be tied to your OTHER database
-        //     var show = await _recommendContext.recommendations
-        //         .FirstOrDefaultAsync(r => r.show_id == showId);
-
-        //     if (show == null || string.IsNullOrEmpty(show.recommended_show_ids))
-        //         return NotFound("No related shows found.");
-
-        //     // Split CSV string into int list
-        //     var ids = show.recommended_show_ids
-        //         .Split(',', StringSplitOptions.RemoveEmptyEntries)
-        //         .Select(id => int.TryParse(id, out var num) ? num : (int?)null)
-        //         .Where(id => id.HasValue)
-        //         .Select(id => id.Value)
-        //         .ToList();
-
-        //     // Use your main Movies DB context to fetch the actual show data
-        //     var relatedMovies = await _moviesContext.movies_titles
-        //         .Where(m => ids.Contains(m.show_id))
-        //         .ToListAsync();
-
-        //     return Ok(relatedMovies);
-        // }
         
         [HttpGet("RelatedCarousel/{showId}")]
         public async Task<IActionResult> GetRelatedShows(int showId)
