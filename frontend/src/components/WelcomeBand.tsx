@@ -93,7 +93,7 @@ function WelcomeBand() {
           <div className="dropdown align-items-center text-center">
             <span className="text-white fs-5 fw-bold d-block mb-2">Name</span>
             <img
-              src="frontend\public\profile.jpg"
+              src="https://media.istockphoto.com/id/1345297900/vector/retro-style-gentleman-face-vector-cartoon.jpg?s=612x612&w=0&k=20&c=_R-Bi_cYrBak_wozvaHDGR1Uo3Tb4tX5yxS-GF0S2Cg="
               alt="Profile"
               className="rounded-circle"
               style={{
@@ -155,7 +155,8 @@ function WelcomeBand() {
 
           <div className="dropdown">
             <img
-              src="frontend\public\profile.jpg"
+              src="https://media.istockphoto.com/id/1345297900/vector/retro-style-gentleman-face-vector-cartoon.jpg?s=612x612&w=0&k=20&c=_R-Bi_cYrBak_wozvaHDGR1Uo3Tb4tX5yxS-GF0S2Cg=
+              "
               alt="Profile"
               className="rounded-circle"
               style={{

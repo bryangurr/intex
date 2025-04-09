@@ -3,6 +3,7 @@ import WelcomeBand from "../components/WelcomeBand";
 import GenreFilter from "../components/GenreFilter";
 import MovieList from "../components/MovieList";
 import "./MoviePage.css";
+import MovieCarousel from "../components/MovieCarousel";
 
 const MoviePage = () => {
   useEffect(() => {
@@ -30,7 +31,12 @@ const MoviePage = () => {
             </div>
           </div>
         </div>
-
+        <div>
+          <MovieCarousel id="caoursel-1"/>
+        </div>
+        <div>
+          <MovieCarousel id="caoursel-2"/>
+        </div>
         <div className="row mt-4">
           <div className="col-12 d-flex justify-content-center">
             <MovieList selectedGenres={selectedGenres} />
