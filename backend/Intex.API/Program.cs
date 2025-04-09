@@ -20,6 +20,12 @@ builder.Services.AddDbContext<MoviesDbContext>(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 
+builder.Services.AddDbContext<RecommendationsDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("RecommendationsDb")));
+
+builder.Services.AddDbContext<UserRecommendationsDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("UserRecommendationsDb")));
+
 builder.Services.AddAuthorization();
 
 // builder.Services.AddIdentityApiEndpoints<IdentityUser>()
