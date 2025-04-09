@@ -65,18 +65,6 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
 
   const observerRef = useInfiniteScroll(loadMore, hasMore && !loading);
 
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.round(rating);
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <span key={i} className="star">
-          {i < fullStars ? "★" : "☆"}
-        </span>
-      );
-    }
-    return stars;
-  };
 
   return (
     <div className="container mt-4">
