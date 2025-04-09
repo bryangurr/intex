@@ -40,11 +40,11 @@ const MovieDetailPage: React.FC = () => {
   
 
   // Image:
-// const posterSrc = `/images/${movie.title}.jpg`; // Uncomment this to dynamically load based on movie title
-// const placeholder = "https://via.placeholder.com/300x450?text=Poster+Unavailable";
+  const posterSrc = `https://inteximages47.blob.core.windows.net/uploads/${movie.title}.jpg`;
+
 
 // TEMPORARY: Static image for testing layout
-const posterSrc = "/images/Avengers Infinity War.jpg";
+// const posterSrc = "/images/Avengers Infinity War.jpg";
 
   return (
 
@@ -68,7 +68,10 @@ const posterSrc = "/images/Avengers Infinity War.jpg";
       <div><strong>Genre:</strong> {movie.genre}</div>
       <div><strong>Country:</strong> {movie.country}</div>
       <div><strong>Director:</strong> {movie.director}</div>
-      <div><strong>Avg. Rating:</strong> {movie.ratings_Avg.toFixed(1)} / 5.0</div>
+      <div>
+        <strong>Avg. Rating:</strong>{" "}
+        {movie.ratings_Avg != null ? movie.ratings_Avg.toFixed(1) + " / 5.0" : "N/A"}
+      </div>
       <div className="user-rating-section mt-4">
       <h3 className="text-lg font-semibold mb-1 text-black">Your Rating:</h3>
       <div>{renderStars(userRating, setUserRating)}</div>
