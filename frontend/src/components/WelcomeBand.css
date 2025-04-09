@@ -44,61 +44,7 @@
 .animate-expand {
   animation: fadeIn 0.3s ease-in-out;
 }
-.movie-scroll-row {
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
 
-.movie-card {
-  width: 230px;
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  border: none;
-  color: white;
-  background-color: #1e1e2f;
-  overflow: hidden;
-  align-items: center;
-}
-
-.movie-card:hover {
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.75);
-  border-color: black;
-}
-
-.scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
-  border: none;
-  font-size: 2rem;
-  z-index: 10;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-}
-
-.scroll-btn.left {
-  left: 0;
-}
-
-.scroll-btn.right {
-  right: 0;
-}
-
-.scroll-btn:hover {
-  background: rgba(255, 255, 255, 0.5);
-  color: black;
-}
-
-.movie-scroll-row {
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  overflow-x: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
 
 @keyframes fadeIn {
   from {
