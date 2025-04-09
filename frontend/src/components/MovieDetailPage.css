@@ -92,3 +92,36 @@
 .star.filled {
   color: #facc15; /* golden yellow */
 }
+/* Recommendation carousel images */
+.carousel-img {
+  width: 120px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: block;
+  margin: 0 auto;
+}
+
+/* Adjust slider item spacing */
+.slick-slide {
+  padding: 0 0.5rem;
+}
+
+/* Remove default link styling for carousel items */
+.carousel-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Recommended movie title styles */
+.carousel-title {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: white;
+  text-decoration: none;
+}
+
+
+
