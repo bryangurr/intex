@@ -88,9 +88,9 @@ export const updateMovie = async (
   }
 };
 
-export const deleteMovie = async (movieID: number): Promise<void> => {
+export const deleteMovie = async (show_id: number): Promise<void> => {
   try {
-    const response = await fetch(`${API_URL}/DeleteMovie/${movieID}`, {
+    const response = await fetch(`${API_URL}/DeleteMovie/${show_id}`, {
       method: "DELETE",
     });
 

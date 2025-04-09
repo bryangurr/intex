@@ -329,6 +329,19 @@ namespace Intex.API.Controllers
             _moviesContext.SaveChanges();
             return Ok(newMovie);
         }
+        [HttpDelete("DeleteMovie/{show_id}")]
+        public IActionResult DeleteMovie(int show_id)
+        {
+            var movie = _moviesContext.movies_titles.Find(show_id);
+            if (movie == null)
+            {
+                return NotFound
+                (new { message = "Movie not found" });
+            }
+            _moviesContext.movies_titles.Remove(movie);
+            _moviesContext.SaveChanges();
+            return NoContent();
+        }
 
     }
 
