@@ -1,82 +1,103 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchMovies } from "../api/MoviesAPI";
 import { Movie } from "../types/Movie";
-import Pagination from "./Pagination";
+import useInfiniteScroll from "./useInfiniteScroll";
+import "./MovieList.css";
 
 function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize] = useState<number>(30);
   const [pageNum, setPageNum] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  // Fetch movies from the API
-  const loadMovies = async () => {
+  const loadMovies = useCallback(async () => {
     try {
       setLoading(true);
+      setError(null);
+
       const data = await fetchMovies(pageSize, pageNum, selectedGenres);
 
-      // Deduplicate based on show_id
-      const uniqueMovies = Array.from(
-        new Map(data.movies.map((m) => [m.show_id, m])).values()
-      );
+      if (!Array.isArray(data.movies)) {
+        throw new Error("API response format is incorrect");
+      }
 
-      setMovies(uniqueMovies);
-      setTotalPages(Math.ceil(data.totalNumMovies / pageSize));
+      setMovies((prevMovies) =>
+        pageNum === 1 ? data.movies : [...prevMovies, ...data.movies]
+      );
+      setHasMore(pageNum * pageSize < data.totalNumMovies);
     } catch (error) {
-      setError((error as Error).message);
+      setError(
+        (error as Error).message || "An error occurred while fetching movies."
+      );
     } finally {
       setLoading(false);
     }
-  };
+  }, [pageNum, selectedGenres, pageSize]);
 
-  // Reload movies on page change, size change, or filter change
   useEffect(() => {
     loadMovies();
-  }, [pageNum, pageSize, selectedGenres]);
+  }, [loadMovies]);
 
-  // Reset to page 1 when filters change
   useEffect(() => {
+    setMovies([]);
     setPageNum(1);
+    setHasMore(true);
   }, [selectedGenres]);
+
+  const loadMore = () => {
+    if (!loading && hasMore) setPageNum((prev) => prev + 1);
+  };
+
+  const observerRef = useInfiniteScroll(loadMore, hasMore && !loading);
+
+  const renderStars = (rating: number) => {
+    const stars = [];
+    const fullStars = Math.round(rating);
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <span key={i} className="star">
+          {i < fullStars ? "★" : "☆"}
+        </span>
+      );
+    }
+    return stars;
+  };
 
   return (
     <div className="container mt-4">
-      {/* Movie Grid */}
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <h2 className="text-center mb-4 text-white">Browse Movies</h2>
+
+      <div className="movie-grid-row">
         {movies.map((movie, index) => (
-          <div className="col" key={`${movie.show_id}-${index}`}>
-            <div className="card movie-grid-card h-100">
+          <div
+            className="col"
+            key={`${movie.show_id}`}
+            ref={index === movies.length - 1 ? observerRef : null}
+          >
+            <div className="movie-grid-card">
               <div className="d-flex justify-content-end flex-wrap p-2">
                 {movie.genre &&
                   movie.genre.split(",").map((g, i) => (
                     <span
                       key={`${movie.show_id}-genre-${i}`}
-                      className="badge bg-secondary me-1 mb-1 text-truncate"
+                      className="badge bg-secondary me-1 mb-1 badge-truncate"
+                      style={{ opacity: 0.5 }}
+                      title={g.trim()}
                     >
                       {g.trim()}
                     </span>
                   ))}
               </div>
 
-              <div className="card-body text-center px-3 py-2">
-                <h6
-                  className="card-title mb-2"
-                  style={{
-                    whiteSpace: "normal",
-                    wordBreak: "break-word",
-                    overflowWrap: "break-word",
-                    fontSize: "1rem",
-                  }}
-                >
-                  {movie.title}
-                </h6>
+              <div className="movie-card-body">
+                <h6 className="movie-title">{movie.title}</h6>
 
-                <ul className="list-unstyled text-start small mb-3">
+                <ul className="list-unstyled text-start movie-details">
                   <li>
                     <strong>Director:</strong> {movie.director}
                   </li>
@@ -87,15 +108,35 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
                     <strong>Duration:</strong> {movie.duration}
                   </li>
                   <li>
-                    <strong>Rating:</strong> {movie.rating}
-                  </li>
-                  <li>
-                    <strong>Country:</strong> {movie.country}
+                    <strong>Rating:</strong>{" "}
+                    {movie.ratings_Avg === 0 ? (
+                      <span className="text-muted">No ratings to display</span>
+                    ) : (
+                      <>
+                        {movie.ratings_Avg.toFixed(1)}{" "}
+                        {renderStars(movie.ratings_Avg)}
+                      </>
+                    )}
                   </li>
                 </ul>
 
                 <button
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-primary btn-sm movie-button"
+                  style={{
+                    backgroundColor: "#6411ad",
+                    borderColor: "#6411ad",
+                    opacity: 0.8,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "white";
+                    e.currentTarget.style.color = "#a500cc";
+                    e.currentTarget.style.borderColor = "#a500cc";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "#6411ad";
+                    e.currentTarget.style.color = "white";
+                    e.currentTarget.style.borderColor = "#6411ad";
+                  }}
                   onClick={() => navigate(`/movie/${movie.show_id}`)}
                 >
                   View Details
@@ -106,21 +147,11 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
         ))}
       </div>
 
-      {/* Pagination Controls */}
-      <Pagination
-        currentPage={pageNum}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        onPageChange={(newPage) => setPageNum(newPage)}
-        onPageSizeChange={(newSize) => {
-          setPageSize(newSize);
-          setPageNum(1); // Reset to page 1 when page size changes
-        }}
-      />
-
-      {/* Status Messages */}
       {loading && <p className="text-center mt-3">Loading movies...</p>}
       {error && <p className="text-danger text-center mt-3">Error: {error}</p>}
+      {!loading && !hasMore && movies.length > 0 && (
+        <p className="text-center mt-3">No more movies to load.</p>
+      )}
       {!loading && movies.length === 0 && (
         <p className="text-center mt-3">No movies found.</p>
       )}

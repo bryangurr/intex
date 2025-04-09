@@ -5,9 +5,9 @@ export interface Movie {
   cast: string;
   country: string;
   release_year: number;
-  rating: string;
+  rating: number;
   duration: string;
   description: string;
   genre: string;
-  rating_Avg: number;
+  ratings_Avg: number;
 }

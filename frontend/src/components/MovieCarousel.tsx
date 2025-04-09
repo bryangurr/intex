@@ -1,25 +1,36 @@
-// src/components/MovieCarousel.js
 import { useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
-import "./WelcomeBand.css";
+import { useParams } from "react-router-dom";
+import "./MovieCarousel.css";
 
-const MovieCarousel = ({ id }: { id: string }) => {
+interface MovieCarouselProps {
+  id: string;
+}
+
+const MovieCarousel = ({ id }: MovieCarouselProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const { showId } = useParams();
 
   useEffect(() => {
-    fetch(
-      "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetAllMovies"
-    )
+    if (!showId) return;
+
+    fetch(`https://localhost:5000/api/Movies/RelatedCarousel/${showId}`)
       .then((res) => res.json())
-      .then((data) => setMovies(data))
-      .catch((err) => console.error("Failed to fetch movies:", err));
-  }, []);
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setMovies(data);
+        } else {
+          console.error("Expected response to be an array of movies");
+        }
+      })
+      .catch((err) => console.error("Failed to fetch related movies:", err));
+  }, [showId]);
 
   const scrollRow = (direction: number) => {
     const container = document.getElementById(id);
     if (!container) return;
 
-    const cardWidth = 230; // Adjust as needed
+    const cardWidth = 230;
     const scrollByAmount = cardWidth * 5;
     const maxScrollLeft = container.scrollWidth - container.clientWidth;
 
@@ -36,7 +47,7 @@ const MovieCarousel = ({ id }: { id: string }) => {
 
   return (
     <div className="movie-carousel-wrapper bg-none text-white py-4 position-relative">
-      <h3 className="px-4">Curated for you</h3>
+      <h3 className="carousel-title px-4">Curated for you</h3>
 
       <button className="scroll-btn left" onClick={() => scrollRow(-1)}>
         ‹
@@ -47,29 +58,10 @@ const MovieCarousel = ({ id }: { id: string }) => {
 
       <div id={id} className="movie-scroll-row d-flex overflow-auto px-4">
         {movies.map((movie) => (
-          <div key={movie.show_id} className="card movie-card me-3">
-            <div
-              className="card-body px-3 py-2"
-              style={{
-                maxWidth: "10ch",
-                // Remove these:
-                // overflow: "hidden",
-                // textOverflow: "ellipsis",
-                // whiteSpace: "nowrap",
-              }}
-            >
-              <h6
-                className="card-title mb-0"
-                style={{
-                  whiteSpace: "normal",
-                  wordBreak: "break-word",
-                  overflowWrap: "break-word",
-                  textAlign: "center",
-                  fontSize: "0.95rem",
-                }}
-              >
-                {movie.title}
-              </h6>
+          <div key={movie.show_id} className="movie-card me-3">
+            <div className="movie-card-body">
+              <h6 className="movie-title">{movie.title}</h6>
+              <div className="movie-hover-info">More Info</div>
             </div>
           </div>
         ))}

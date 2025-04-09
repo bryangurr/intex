@@ -1,42 +1,43 @@
 import { Movie } from "../types/Movie";
 
-interface FetchMoviesResponse {
-  movies: Movie[];
-  totalNumMovies: number;
-}
+// interface FetchMoviesResponse {
+//   movies: Movie[];
+//   totalNumMovies: number;
+// }
 
 const API_URL =
   "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetAllMovies"; // Replace with your actual .NET endpoint
-
 export const fetchMovies = async (
   pageSize: number,
   pageNum: number,
   selectedGenres: string[]
-): Promise<FetchMoviesResponse> => {
+): Promise<{ movies: Movie[]; totalNumMovies: number }> => {
   try {
     const genreParams = selectedGenres
       .map((g) => `genre=${encodeURIComponent(g)}`)
       .join("&");
 
-    const query = new URLSearchParams({
-      pageSize: pageSize.toString(),
-      pageNum: pageNum.toString(),
-    });
-
-    const url = `${API_URL}?${query.toString()}${genreParams ? `&${genreParams}` : ""}`;
-    const response = await fetch(url);
+    const response = await fetch(
+      `${API_URL}?pageSize=${pageSize}&pageNum=${pageNum}${
+        selectedGenres.length ? `&${genreParams}` : ""
+      }`
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch movies");
     }
 
-    const json = await response.json();
+    const data = await response.json();
 
-    // ⚠️ Adapt to raw array
-    return {
-      movies: Array.isArray(json) ? json : [],
-      totalNumMovies: 1000, // <-- arbitrary or approximate since backend isn’t returning it
-    };
+    // ✅ Double check that it's in expected shape
+    if (
+      !Array.isArray(data.movies) ||
+      typeof data.totalNumMovies !== "number"
+    ) {
+      throw new Error("Unexpected response format from server");
+    }
+
+    return data; // { movies, totalNumMovies }
   } catch (error) {
     console.error("Error fetching movies:", error);
     throw error;
