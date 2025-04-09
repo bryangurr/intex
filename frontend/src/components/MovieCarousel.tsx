@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
+import { useParams } from "react-router-dom";
 import "./MovieCarousel.css";
 
 interface MovieCarouselProps {
@@ -8,19 +9,22 @@ interface MovieCarouselProps {
 
 const MovieCarousel = ({ id }: MovieCarouselProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const { showId } = useParams();
 
   useEffect(() => {
-    fetch("https://localhost:5000/api/Movies/GetAllMovies")
+    if (!showId) return;
+
+    fetch(`https://localhost:5000/api/Movies/RelatedCarousel/${showId}`)
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data.movies)) {
-          setMovies(data.movies);
+        if (Array.isArray(data)) {
+          setMovies(data);
         } else {
-          console.error("Expected data.movies to be an array");
+          console.error("Expected response to be an array of movies");
         }
       })
-      .catch((err) => console.error("Failed to fetch movies:", err));
-  }, []);
+      .catch((err) => console.error("Failed to fetch related movies:", err));
+  }, [showId]);
 
   const scrollRow = (direction: number) => {
     const container = document.getElementById(id);
