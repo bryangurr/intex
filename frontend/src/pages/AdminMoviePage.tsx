@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import WelcomeBand from "../components/WelcomeBand";
-import GenreFilter from "../components/GenreFilter";
-import MovieList from "../components/MovieList";
 import "./MoviePage.css";
 // import AuthorizeView from "../components/AuthorizeView"; // TODO -> Uncomment this and the other <AuthorizeView>s to force users to authenticate. 
 // import Logout from "../components/Logout";
+import GenreFilterDropdown from "../components/GenreFilter";
+import AdminList from "../components/AdminList";
 
 const AdminMoviePage = () => {
   useEffect(() => {
@@ -24,9 +24,9 @@ const AdminMoviePage = () => {
 
       <div className="container" style={{ paddingTop: "100px" }}>
         <div className="row mt-2">
-          <div className="col-12 d-flex justify-content-center">
+          <div className="col-12 d-flex">
             <div className="genre-filter-wrapper">
-              <GenreFilter
+              <GenreFilterDropdown
                 selectedGenres={selectedGenres}
                 onChange={setSelectedGenres}
               />
@@ -36,7 +36,7 @@ const AdminMoviePage = () => {
 
         <div className="row mt-4">
           <div className="col-12 d-flex justify-content-center">
-            <MovieList selectedGenres={selectedGenres} />
+            <AdminList selectedGenres={selectedGenres} />
           </div>
         </div>
       </div>
