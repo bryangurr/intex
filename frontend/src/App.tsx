@@ -13,6 +13,7 @@ import AdminMoviePage from "./pages/AdminMoviePage";
 import MovieDetailPage from "./pages/MovieDetailPage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import SearchResults from "./components/SearchResults";
 import CookieBanner from "./components/CookieBanner";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviePage />} />
           <Route path="/admin" element={<AdminMoviePage />} />
+          <Route path="/search" element={<SearchResults />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

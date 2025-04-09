@@ -122,7 +122,11 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
 
                 <button
                   className="btn btn-primary btn-sm movie-button"
-                  style={{ backgroundColor: "#6411ad", borderColor: "#6411ad", opacity: 0.8 }}
+                  style={{
+                    backgroundColor: "#6411ad",
+                    borderColor: "#6411ad",
+                    opacity: 0.8,
+                  }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = "white";
                     e.currentTarget.style.color = "#a500cc";
