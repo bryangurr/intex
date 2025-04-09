@@ -9,5 +9,5 @@ export interface Movie {
   duration: string;
   description: string;
   genre: string;
-  rating_Avg: number;
+  ratings_Avg: number;
 }
