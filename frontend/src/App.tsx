@@ -13,11 +13,13 @@ import AdminMoviePage from "./pages/AdminMoviePage";
 import MovieDetailPage from "./pages/MovieDetailPage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import CookieBanner from "./components/CookieBanner";
 
 function App() {
   return (
     <>
       <Router>
+        <CookieBanner />
         <Routes>
           <Route path="/Home" element={<HomePage />} />
           <Route path="/" element={<HomePage />} />
