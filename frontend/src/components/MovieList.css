@@ -1,0 +1,110 @@
+/* MovieList.css */
+/* Card styling */
+.movie-grid-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: #fff;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.movie-grid-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(199, 0, 255, 0.3);
+  cursor: pointer;
+}
+
+/* Card body layout */
+.movie-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  flex-grow: 1;
+}
+
+/* Title */
+.movie-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Details */
+.movie-details {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* Button override */
+.movie-button {
+  margin-top: auto;
+  width: 100%;
+  background-color: #6411ad;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.movie-button:hover {
+  background-color: white;
+  color: #a500cc;
+}
+
+.movie-grid-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 1200px) {
+  .movie-grid-row {
+    grid-template-columns: repeat(5, 1fr); /* 5 cards on large screens */
+  }
+}
+
+.movie-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  flex-grow: 1;
+}
+
+.movie-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center;
+}
+
+.movie-details {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.movie-button {
+  margin-top: auto;
+  width: 100%;
+}
+
+.badge-truncate {
+  display: inline-block; /* Required for width/ellipsis to apply */
+  max-width: 100px; /* You can adjust this value */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
