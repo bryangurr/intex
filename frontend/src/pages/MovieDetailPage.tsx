@@ -7,6 +7,7 @@ const MovieDetailPage: React.FC = () => {
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
+    // fetch(`localhost:5173/api/Movies/GetMovie/${id}`)
     fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetMovie/${id}`)
       .then((response) => response.json())
       .then((data: Movie) => setMovie(data))
@@ -60,4 +61,4 @@ const MovieDetailPage: React.FC = () => {
 };
 
 export default MovieDetailPage;
-export default MovieDetailPage;
+
