@@ -1,81 +1,171 @@
-import { useEffect, useState } from "react";
-import "./GenreFilter.css";
+import React, { useEffect, useState } from "react";
+import Select from "react-select";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 interface GenreFilterProps {
   selectedGenres: string[];
   onChange: (genres: string[]) => void;
 }
 
-const GenreFilter: React.FC<GenreFilterProps> = ({
+const MOVIE_GENRES = [
+  "Action",
+  "Adventure",
+  "Comedies",
+  "Dramas",
+  "Fantasy",
+  "Horror Movies",
+  "Family Movies",
+  "Thrillers",
+  "Musicals",
+  "Romantic Movies",
+  "International Movies Thrillers",
+];
+
+const TV_GENRES = [
+  "TV Action",
+  "TV Comedies",
+  "TV Dramas",
+  "Reality TV",
+  "Kids' TV",
+  "Language TV Shows",
+  "Talk Shows TV Comedies",
+  "Anime Series International TV Shows",
+  "British TV Shows Docuseries International TV Shows",
+  "International TV Shows Romantic TV Shows TV Dramas",
+];
+
+const DOCUMENTARY_GENRES = [
+  "Documentaries",
+  "Docuseries",
+  "Crime TV Shows Docuseries",
+  "Nature TV",
+  "Spirituality",
+  "Documentaries International Movies",
+];
+
+// Helper to clean label
+const formatGenreLabel = (label: string) => label.replace(/_/g, " ");
+const createOptions = (genres: string[]) =>
+  genres.map((g) => ({ value: g, label: formatGenreLabel(g) }));
+
+const GenreDropdownGroup = ({
+  label,
+  genres,
   selectedGenres,
   onChange,
+}: {
+  label: string;
+  genres: string[];
+  selectedGenres: string[];
+  onChange: (newGenres: string[]) => void;
 }) => {
-  const [allGenres, setAllGenres] = useState<string[]>([]);
+  const options = [
+    { value: `All_${label}`, label: `All ${label}` },
+    ...createOptions(genres),
+  ];
 
-  useEffect(() => {
-    const fetchGenres = async () => {
-      try {
-        const res = await fetch("https://your-backend-url/api/movies/genres");
-        const data = await res.json();
-        setAllGenres(data);
-      } catch (err) {
-        console.error("Error fetching genres:", err);
-      }
-    };
-
-    fetchGenres();
-  }, []);
-
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = e.target.value;
-    if (selected && !selectedGenres.includes(selected)) {
-      onChange([...selectedGenres, selected]);
+  const handleChange = (selectedOptions: any) => {
+    const values = selectedOptions.map((opt: any) => opt.value);
+    if (values.includes(`All_${label}`)) {
+      onChange(genres); // Select all in this group
+    } else {
+      onChange(values);
     }
   };
 
-  const handleRemove = (genre: string) => {
-    onChange(selectedGenres.filter((g) => g !== genre));
-  };
+  const selected = createOptions(genres).filter((opt) =>
+    selectedGenres.includes(opt.value)
+  );
 
   return (
-    <div className="genre-filter">
-      <select
-        id="genre-select"
-        className="form-select"
-        onChange={handleSelect}
-        value=""
-      >
-        <option value="" disabled>
-          Genre ↓
-        </option>
-        {allGenres.map((genre) => (
-          <option
-            key={genre}
-            value={genre}
-            disabled={selectedGenres.includes(genre)}
-          >
-            {genre}
-          </option>
-        ))}
-      </select>
-
-      {selectedGenres.length > 0 && (
-        <div className="chip-container mt-3">
-          {selectedGenres.map((genre) => (
-            <span key={genre} className="chip">
-              {genre}
-              <button
-                type="button"
-                className="btn-close btn-close-white btn-sm ms-2"
-                onClick={() => handleRemove(genre)}
-                aria-label={`Remove ${genre}`}
-              />
-            </span>
-          ))}
-        </div>
-      )}
+    <div className="mb-3" style={{ minWidth: "250px" }}>
+      <label className="form-label fw-bold text-white">{label}</label>
+      <Select
+        isMulti
+        options={options}
+        value={selected}
+        onChange={handleChange}
+        placeholder={`Select ${label} genres...`}
+        classNamePrefix="select"
+      />
     </div>
   );
 };
 
-export default GenreFilter;
+const GenreFilterDropdown: React.FC<GenreFilterProps> = ({
+  selectedGenres,
+  onChange,
+}) => {
+  const [movieGenres, setMovieGenres] = useState<string[]>([]);
+  const [tvGenres, setTvGenres] = useState<string[]>([]);
+  const [docGenres, setDocGenres] = useState<string[]>([]);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+
+  const clearAllGenres = () => {
+    setMovieGenres([]);
+    setTvGenres([]);
+    setDocGenres([]);
+  };
+
+  useEffect(() => {
+    const merged = Array.from(
+      new Set([...movieGenres, ...tvGenres, ...docGenres])
+    );
+    onChange(merged);
+  }, [movieGenres, tvGenres, docGenres, onChange]);
+
+  return (
+    <div className="mb-4">
+      <div className="d-flex flex-wrap align-items-start gap-3">
+        {/* Toggle Filter Button (left side) */}
+        <button
+          className="btn btn-outline-light d-flex align-items-center border-radius-5 px-3 py-2"
+          onClick={() => setShowFilters((prev) => !prev)}
+        >
+          <span className="me-2">
+            {showFilters ? "Close Filters" : "Filters"}
+          </span>
+          <i className={`bi ${showFilters ? "bi-x-circle" : "bi-funnel"}`}></i>
+        </button>
+
+        {(movieGenres.length > 0 ||
+          tvGenres.length > 0 ||
+          docGenres.length > 0) && (
+          <button
+            className="btn btn-outline-danger d-flex align-items-center border-radius-5 px-3 py-2"
+            onClick={clearAllGenres}
+          >
+            <span className="me-2">Unselect All</span>
+            <i className="bi bi-x-circle"></i>
+          </button>
+        )}
+
+        {/* Filters appear to the right */}
+        {showFilters && (
+          <div className="d-flex flex-wrap gap-4 ms-auto">
+            <GenreDropdownGroup
+              label="Movies"
+              genres={MOVIE_GENRES}
+              selectedGenres={movieGenres}
+              onChange={setMovieGenres}
+            />
+            <GenreDropdownGroup
+              label="TV Shows"
+              genres={TV_GENRES}
+              selectedGenres={tvGenres}
+              onChange={setTvGenres}
+            />
+            <GenreDropdownGroup
+              label="Documentaries"
+              genres={DOCUMENTARY_GENRES}
+              selectedGenres={docGenres}
+              onChange={setDocGenres}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default GenreFilterDropdown;

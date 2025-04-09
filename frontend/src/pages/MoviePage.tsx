@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import WelcomeBand from "../components/WelcomeBand";
-import GenreFilter from "../components/GenreFilter";
 import MovieList from "../components/MovieList";
 import "./MoviePage.css";
 import MovieCarousel from "../components/MovieCarousel";
+import GenreFilterDropdown from "../components/GenreFilter";
 
 const MoviePage = () => {
   useEffect(() => {
@@ -21,21 +21,18 @@ const MoviePage = () => {
       <WelcomeBand />
 
       <div className="container" style={{ paddingTop: "100px" }}>
-        <div className="row mt-2">
-          <div className="col-12 d-flex justify-content-center">
-            <div className="genre-filter-wrapper">
-              <GenreFilter
-                selectedGenres={selectedGenres}
-                onChange={setSelectedGenres}
-              />
-            </div>
-          </div>
+        <div>
+          <MovieCarousel id="caoursel-1" />
         </div>
         <div>
-          <MovieCarousel id="caoursel-1"/>
+          <MovieCarousel id="caoursel-2" />
         </div>
-        <div>
-          <MovieCarousel id="caoursel-2"/>
+        <br />
+        <div className="genre-filter-wrapper">
+          <GenreFilterDropdown
+            selectedGenres={selectedGenres}
+            onChange={setSelectedGenres}
+          />
         </div>
         <div className="row mt-4">
           <div className="col-12 d-flex justify-content-center">
