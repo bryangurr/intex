@@ -114,6 +114,10 @@ const GenreFilterDropdown: React.FC<GenreFilterProps> = ({
     onChange(merged);
   }, [movieGenres, tvGenres, docGenres, onChange]);
 
+  if (false) {
+    console.log(selectedGenres);
+  }
+
   return (
     <div className="mb-4">
       <div className="d-flex flex-wrap align-items-start gap-3">
