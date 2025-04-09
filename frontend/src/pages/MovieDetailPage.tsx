@@ -7,6 +7,8 @@ import WelcomeBand from "../components/WelcomeBand";
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [userRating, setUserRating] = useState<number | null>(null);
+
 
   useEffect(() => {
     fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetMovie/${id}`)
@@ -18,6 +20,24 @@ const MovieDetailPage: React.FC = () => {
   if (!movie) {
     return <div className="text-center mt-10 text-xl">Loading movie...</div>;
   }
+
+  const renderStars = (currentRating: number | null, onRate: (rating: number) => void) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span
+          key={i}
+          className={`star ${currentRating !== null && i <= currentRating ? "filled" : ""}`}
+          onClick={() => onRate(i)}
+          style={{ cursor: "pointer", fontSize: "1.5rem", marginRight: "4px" }}
+        >
+          {i <= (currentRating || 0) ? "★" : "☆"}
+        </span>
+      );
+    }
+    return stars;
+  };
+  
 
   // Image:
 // const posterSrc = `/images/${movie.title}.jpg`; // Uncomment this to dynamically load based on movie title
@@ -49,6 +69,11 @@ const posterSrc = "/images/Avengers Infinity War.jpg";
       <div><strong>Country:</strong> {movie.country}</div>
       <div><strong>Director:</strong> {movie.director}</div>
       <div><strong>Avg. Rating:</strong> {movie.ratings_Avg.toFixed(1)} / 5.0</div>
+      <div className="user-rating-section mt-4">
+      <h3 className="text-lg font-semibold mb-1 text-black">Your Rating:</h3>
+      <div>{renderStars(userRating, setUserRating)}</div>
+    </div>
+
     </div>
 
     <div className="movie-cast-box">

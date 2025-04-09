@@ -15,7 +15,7 @@
   }
   
   .poster-img {
-    width: 300px;
+    width: 400px;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -33,7 +33,7 @@
   }
   
   .movie-info-card {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     color: black;
     padding: 2rem;
     border-radius: 12px;
@@ -70,7 +70,7 @@
   }
   
   .movie-cast-box {
-    background-color: #f2f2f2;
+    background-color: #cebcf1;
     padding: 1rem;
     border-radius: 8px;
   }
@@ -84,4 +84,11 @@
     border-top: 1px solid #999;
     margin: 1rem 0 1.5rem;
   }
-    
+    .star {
+  color: #aaa;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: #facc15; /* golden yellow */
+}
