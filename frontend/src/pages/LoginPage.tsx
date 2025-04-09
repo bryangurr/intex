@@ -34,8 +34,12 @@ function LoginPage() {
     e.preventDefault();
     setError(""); // Clear any previous errors
 
-    if (!email || !password) {
-      setError("Please fill in all fields.");
+    if (!password) {
+      setError("Password is required");
+      return;
+    }
+    if (!email) {
+      setError("Email is required");
       return;
     }
 
@@ -64,7 +68,7 @@ function LoginPage() {
         throw new Error(data?.message || "Invalid email or password.");
       }
 
-      navigate("/competition");
+      navigate("/movies");
     } catch (error: any) {
       setError(error.message || "Error logging in.");
       console.error("Fetch attempt failed:", error);
