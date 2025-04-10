@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./WelcomeBand.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
-import { AuthorizedUser, useUser } from "./AuthorizeView";
-// import  from "react";
+import { AuthorizedUser } from "./AuthorizeView";
 
 function WelcomeBand() {
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const user = useUser();
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,17 +94,15 @@ function WelcomeBand() {
                 About
               </span>
             </li>
-            {user?.roles.includes("Admin") && (
-              <li className="nav-item">
-                <span
-                  className="nav-link fs-4 active"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => navigate(`/admin`)}
-                >
-                  Admin
-                </span>
-              </li>
-            )}
+            <li className="nav-item">
+              <span
+                className="nav-link fs-4 active"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/admin`)}
+              >
+                Admin
+              </span>
+            </li>
           </ul>
         </div>
         {/* Mobile profile dropdown */}
@@ -182,7 +178,8 @@ function WelcomeBand() {
 
           <div className="dropdown">
             <img
-              src="https://media.istockphoto.com/id/1345297900/vector/retro-style-gentleman-face-vector-cartoon.jpg?s=612x612&w=0&k=20&c=_R-Bi_cYrBak_wozvaHDGR1Uo3Tb4tX5yxS-GF0S2Cg="
+              src="https://media.istockphoto.com/id/1345297900/vector/retro-style-gentleman-face-vector-cartoon.jpg?s=612x612&w=0&k=20&c=_R-Bi_cYrBak_wozvaHDGR1Uo3Tb4tX5yxS-GF0S2Cg=
+              "
               alt="Profile"
               className="rounded-circle"
               style={{
@@ -203,8 +200,7 @@ function WelcomeBand() {
               <li>
                 <button className="bg-secondary text-white border-0 rounded-3 px-3 py-2">
                   <Logout>
-                    Logout <AuthorizedUser value="email" />{" "}
-                    {/* <AuthorizedUser value="roles" /> */}
+                    Logout <AuthorizedUser value="email" />
                   </Logout>
                 </button>
               </li>
