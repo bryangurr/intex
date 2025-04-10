@@ -17,7 +17,7 @@ function WelcomeBand() {
 
     try {
       const response = await fetch(
-        `https://localhost:5000/api/Movies/Search?query=${encodeURIComponent(searchTerm)}`
+        `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/Search?query=${encodeURIComponent(searchTerm)}`
       );
       const data = await response.json();
 
