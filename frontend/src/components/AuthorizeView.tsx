@@ -72,7 +72,7 @@ export function AuthorizedUser(props: { value: string }) {
 
   if (props.value === "email") return <>{user.email}</>;
 
-  // if (props.value === "roles") return <>{user.roles.join(", ")}</>;
+  if (props.value === "roles") return <>{user.roles.join(", ")}</>;
 
   return null;
 }
