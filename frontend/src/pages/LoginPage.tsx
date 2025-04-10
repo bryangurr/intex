@@ -44,10 +44,11 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-      ? // ? "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
-        // : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
-        "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true" // Comment out for localhost testing
-      : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true"; // Comment out for localhost testing
+     ? 
+     // ? "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
+      // : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
+      "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true" // Comment out for localhost testing
+    : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true"; // Comment out for localhost testing
 
     try {
       const response = await fetch(loginUrl, {
@@ -150,14 +151,18 @@ function LoginPage() {
               </div>
               <hr className="my-4" />
               <div className="text-center mt-4">
-                <a href="https://play.google.com/store/apps/dev?id=7789761052013638919&hl=en_US"
+                <a
+                  href="https://play.google.com/store/apps/dev?id=7789761052013638919&hl=en_US"
                   target="_blank"
-                  rel="noopener noreferrer">
-                <i className="fa-brands fa-google social-icon me-3"></i>
+                  rel="noopener noreferrer"
+                >
+                  <i className="fa-brands fa-google social-icon me-3"></i>
                 </a>
-                <a href="https://www.facebook.com/AngelStudios.inc/" 
-                  target="_blank" 
-                  rel="noopener noreferrer">
+                <a
+                  href="https://www.facebook.com/AngelStudios.inc/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <i className="fa-brands fa-facebook-f social-icon"></i>
                 </a>
               </div>
