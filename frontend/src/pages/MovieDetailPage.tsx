@@ -53,6 +53,22 @@ const MovieDetailPage: React.FC = () => {
     return () => controller.abort();
   }, [id]);
 
+  // When the movie changes, update the userRating from localStorage.
+  // If there is no stored rating, then explicitly set it to null.
+  useEffect(() => {
+    if (movie) {
+      const storedRating = localStorage.getItem(`movie-rating-${movie.show_id}`);
+      setUserRating(storedRating ? Number(storedRating) : null);
+    }
+  }, [movie]);
+
+  // When the user rating changes, save it to localStorage.
+  useEffect(() => {
+    if (movie && userRating !== null) {
+      localStorage.setItem(`movie-rating-${movie.show_id}`, userRating.toString());
+    }
+  }, [movie, userRating]);
+
   if (!movie) {
     return <div className="text-center mt-10 text-xl">Loading movie...</div>;
   }
@@ -63,7 +79,7 @@ const MovieDetailPage: React.FC = () => {
   // Filter out recommendations that have failed image loads
   const validRecommendations = recommendations.filter(rec => !failedRecommendations.has(rec.show_id));
 
-  // Utility function to render star ratings
+  // Utility function to render star ratings (clickable)
   const renderStars = (currentRating: number | null, onRate: (rating: number) => void) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -80,6 +96,14 @@ const MovieDetailPage: React.FC = () => {
     }
     return stars;
   };
+
+  // Compute the rating to display (if average rating is zero, show user's rating instead)
+  const displayedRating =
+    movie.ratings_Avg && movie.ratings_Avg > 0
+      ? movie.ratings_Avg.toFixed(1) + " / 5.0"
+      : userRating
+      ? userRating + " / 5.0"
+      : "N/A";
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
@@ -101,8 +125,7 @@ const MovieDetailPage: React.FC = () => {
                 <div><strong>Country:</strong> {movie.country}</div>
                 <div><strong>Director:</strong> {movie.director}</div>
                 <div>
-                  <strong>Avg. Rating:</strong>{" "}
-                  {movie.ratings_Avg != null ? movie.ratings_Avg.toFixed(1) + " / 5.0" : "N/A"}
+                  <strong>Avg. Rating:</strong> {displayedRating}
                 </div>
                 <div className="user-rating-section mt-4">
                   <h3 className="text-lg font-semibold mb-1 text-black">Your Rating:</h3>
@@ -145,7 +168,11 @@ const MovieDetailPage: React.FC = () => {
               const recImageSrc = `https://inteximages47.blob.core.windows.net/uploads/${sanitizeTitleForBlob(rec.title)}.jpg`;
               return (
                 <div key={rec.show_id} className="px-1">
-                  <Link to={`/movie/${rec.show_id}`} className="carousel-link block">
+                  <Link 
+                    to={`/movie/${rec.show_id}`} 
+                    className="carousel-link block"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  >
                     <img
                       src={recImageSrc}
                       alt={`Recommended movie ${rec.title}`}
