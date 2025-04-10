@@ -73,6 +73,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
           id: userDetails.id || -1,
         });
         setAuthorized(true);
+        console.log(authData.roles);
       } catch (err) {
         console.error("Auth failed", err);
         setAuthorized(false);

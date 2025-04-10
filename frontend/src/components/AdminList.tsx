@@ -10,7 +10,7 @@ function AdminList({ selectedGenres }: { selectedGenres: string[] }) {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [pageSize] = useState<number>(23);
+  const [pageSize] = useState<number>(24);
   const [pageNum, setPageNum] = useState<number>(1);
   const [totalMovies, setTotalMovies] = useState<number>(0);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -84,8 +84,10 @@ function AdminList({ selectedGenres }: { selectedGenres: string[] }) {
             <span style={{ fontSize: "3rem", color: "#FFFFFF" }}>+</span>
           </div>
         </div>
-
         {movies.map((movie) => {
+          console.log(movie);
+          if (movie == null) return null;
+
           const isFallback = imageErrorIds.has(movie.show_id);
           const posterSrc = isFallback
             ? "https://inteximages47.blob.core.windows.net/uploads/default-movie.jpg"
@@ -221,6 +223,7 @@ function AdminList({ selectedGenres }: { selectedGenres: string[] }) {
                     fetchMovies(pageSize, pageNum, []).then((data) =>
                       setMovies(data.movies)
                     );
+                    // console.log(movies);
                   }}
                   onCancel={() => setEditingMovie(null)}
                 />

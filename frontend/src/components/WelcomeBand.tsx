@@ -13,7 +13,7 @@ function WelcomeBand() {
   const [searchTerm, setSearchTerm] = useState("");
   const user = useUser();
   const isLoggedIn = !!user;
-  const isAdmin = user?.roles.includes("admin");
+  const isAdmin = user?.roles.includes("Admin");
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
