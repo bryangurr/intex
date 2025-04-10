@@ -29,7 +29,7 @@ const MoviePage = () => {
     const fetchCarousels = async (userIdToTry: number, isFallback = false) => {
       try {
         const res = await fetch(
-          `https://localhost:5000/api/Movies/UserRecommendations/${userIdToTry}`
+          `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/UserRecommendations/${userIdToTry}`
         );
         const data = await res.json();
 

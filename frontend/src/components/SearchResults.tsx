@@ -14,7 +14,7 @@ function SearchResults() {
   useEffect(() => {
     if (query) {
       fetch(
-        `https://localhost:5000/api/Movies/Search?query=${encodeURIComponent(query)}`
+        `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/Search?query=${encodeURIComponent(query)}`
       )
         .then((res) => res.json())
         .then((data) => {
