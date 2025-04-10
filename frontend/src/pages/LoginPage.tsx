@@ -148,6 +148,16 @@ function LoginPage() {
                   Register
                 </button>
               </div>
+              <div className="d-grid mb-2">
+                <button
+                  className="btn btn-purple text-uppercase fw-bold"
+                  type="button"
+                  onClick={() => navigate("/")}
+                >
+                  Back to Home Page
+                </button>
+              </div>
+
               <hr className="my-4" />
               <div className="text-center mt-4">
                 <a href="https://play.google.com/store/apps/dev?id=7789761052013638919&hl=en_US"

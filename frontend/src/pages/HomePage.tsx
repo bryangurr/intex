@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import WelcomeBand from "../components/WelcomeBand";
 import "../components/GenreCards.css";
+import AuthorizeView from "../components/AuthorizeView";
 
 const mockMovies = [
   { id: 1, title: "Personalized Recommendations", genre: "More of what you like" },
@@ -49,7 +50,9 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <WelcomeBand />
+      <AuthorizeView>
+        <WelcomeBand />
+      </AuthorizeView>
       <br/><br/><br/>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-800 to-blue-800 text-white text-center py-20 px-4">
@@ -58,70 +61,16 @@ function HomePage() {
         <br/>
         <button
           onClick={handleLoginClick}
-          className="bg-white text-blue-800 font-semibold px-6 py-3 rounded shadow hover:bg-gray-200 transition"
+          className="btn btn-purple text-uppercase fw-bold"
+          style={{
+            fontSize: "1rem",
+            padding: "1rem 2rem",
+            borderRadius: "0.5rem",
+          }}
         >
           Sign In
         </button>
       </section>
-      <br/>
-      {/* Carousel */}
-      <section className="px-6 py-12">
-        <h3 className="text-2xl font-semibold mb-6 text-white">What CineNiche has to offer: </h3>
-        <Slider {...settings}>
-          {mockMovies.map((movie) => (
-            <div
-              key={movie.id}
-              onClick={handleMovieClick}
-              className="bg-gray-800 rounded p-4 mx-2 cursor-pointer transition transform hover:scale-105 hover:shadow-xl"
-            >
-              <div className="h-40 bg-gray-700 rounded mb-3 flex items-center justify-center text-gray-300">
-                <i className="fas fa-film text-4xl"></i>
-              </div>
-              <h4 className="font-bold text-white text-center">{movie.title}</h4>
-              <p className="text-sm text-gray-400 text-center">{movie.genre}</p>
-            </div>
-          ))}
-        </Slider>
-      </section>
-      <br></br>
-
-
-      {/* Subscription Section */}
-      <section style={{
-        backgroundColor: '#2d2d2d', // lighter than black
-        padding: '4rem 1.5rem',
-        color: '#fff',
-        textAlign: 'center'
-      }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>
-            Unlock Unlimited Movies & Shows
-          </h2>
-          <p style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>
-            Subscribe now for just <strong>$7.99/month</strong> and enjoy a world of entertainment tailored just for you.
-          </p>
-          <button
-        onClick={handleLoginClick}
-        style={{
-          backgroundColor: '#7c3aed',
-          color: '#fff',
-          padding: '0.75rem 2rem',
-          fontSize: '1rem',
-          fontWeight: 600,
-          borderRadius: '0.375rem',
-          border: 'none',
-          cursor: 'pointer',
-          transition: 'background-color 0.3s ease'
-        }}
-        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#6b21a8')}
-        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
-      >
-        Subscribe
-      </button>
-
-        </div>
-      </section>
-      <br/><br/>
 
       {/* Genre Feature Section */}
       <section style={{ padding: '3rem 1.5rem' }}>
@@ -218,6 +167,55 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Subscription Section */}
+      <section style={{
+        backgroundColor: '#2d2d2d', // lighter than black
+        padding: '4rem 1.5rem',
+        color: '#fff',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>
+            Unlock Unlimited Movies & Shows
+          </h2>
+          <p style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>
+            Subscribe now for just <strong>$7.99/month</strong> and enjoy a world of entertainment tailored just for you.
+          </p>
+          <button
+            onClick={handleLoginClick}
+            className="btn btn-purple btn-big text-uppercase fw-bold"
+            style={{
+              fontSize: "1rem",
+              padding: "1rem 2rem",
+              borderRadius: "0.5rem",
+            }}
+          >
+            Subscribe
+          </button>
+
+        </div>
+      </section>
+
+      <br/><br/>
+{/* Carousel */}
+<section className="px-6 py-12">
+        <h3 className="text-2xl font-semibold mb-6 text-white">What CineNiche has to offer: </h3>
+        <Slider {...settings}>
+          {mockMovies.map((movie) => (
+            <div
+              key={movie.id}
+              onClick={handleMovieClick}
+              className="bg-gray-800 rounded p-4 mx-2 cursor-pointer transition transform hover:scale-105 hover:shadow-xl"
+            >
+              <div className="h-40 bg-gray-700 rounded mb-3 flex items-center justify-center text-gray-300">
+                <i className="fas fa-film text-4xl"></i>
+              </div>
+              <h4 className="font-bold text-white text-center">{movie.title}</h4>
+              <p className="text-sm text-gray-400 text-center">{movie.genre}</p>
+            </div>
+          ))}
+        </Slider>
+      </section>
       <br/><br/>
 
     </div>
