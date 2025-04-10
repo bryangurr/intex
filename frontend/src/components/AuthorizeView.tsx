@@ -1,12 +1,11 @@
 import React, { useState, useEffect, createContext } from "react";
 import { Navigate } from "react-router-dom";
 
-const UserContext = createContext<User | null>(null);
-
 interface User {
   email: string;
   roles: string[];
 }
+export const UserContext = createContext<User | null>(null);
 
 function AuthorizeView(props: { children: React.ReactNode }) {
   const [authorized, setAuthorized] = useState<boolean>(false);
@@ -79,3 +78,4 @@ export function AuthorizedUser(props: { value: string }) {
 }
 
 export default AuthorizeView;
+export const useUser = () => React.useContext(UserContext);
