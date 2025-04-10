@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
 import "./MovieList.css";
 import WelcomeBand from "./WelcomeBand";
+import AuthorizeView from "./AuthorizeView";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -38,7 +39,9 @@ function SearchResults() {
 
   return (
     <>
-      <WelcomeBand />
+      <AuthorizeView>
+        <WelcomeBand />
+      </AuthorizeView>
       <div className="container mt-5 pt-5 text-white">
         <h2 className="text-white mb-4">Search Results for "{query}"</h2>
 

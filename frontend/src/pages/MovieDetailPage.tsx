@@ -6,6 +6,7 @@ import WelcomeBand from "../components/WelcomeBand";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import AuthorizeView from "../components/AuthorizeView";
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -107,7 +108,9 @@ const MovieDetailPage: React.FC = () => {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-      <WelcomeBand />
+      <AuthorizeView>
+        <WelcomeBand />
+      </AuthorizeView>
       <br /><br /><br />
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Main Movie Details */}

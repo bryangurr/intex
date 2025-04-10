@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import WelcomeBand from "../components/WelcomeBand";
 import "../components/GenreCards.css";
+import AuthorizeView from "../components/AuthorizeView";
 
 const mockMovies = [
   { id: 1, title: "Personalized Recommendations", genre: "More of what you like" },
@@ -49,7 +50,9 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <WelcomeBand />
+      <AuthorizeView>
+        <WelcomeBand />
+      </AuthorizeView>
       <br/><br/><br/>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-800 to-blue-800 text-white text-center py-20 px-4">
