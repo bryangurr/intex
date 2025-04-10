@@ -10,37 +10,42 @@ interface GenreFilterProps {
 const MOVIE_GENRES = [
   "Action",
   "Adventure",
+  "Children",
   "Comedies",
+  "Comedies Dramas International Movies",
+  "Comedies International Movies",
+  "Comedies Romantic Movies",
   "Dramas",
+  "Dramas International Movies",
+  "Dramas Romantic Movies",
+  "Family Movies",
   "Fantasy",
   "Horror Movies",
-  "Family Movies",
-  "Thrillers",
-  "Musicals",
-  "Romantic Movies",
   "International Movies Thrillers",
+  "Musicals",
+  "Thrillers",
 ];
 
 const TV_GENRES = [
-  "TV Action",
-  "TV Comedies",
-  "TV Dramas",
-  "Reality TV",
-  "Kids' TV",
-  "Language TV Shows",
-  "Talk Shows TV Comedies",
   "Anime Series International TV Shows",
   "British TV Shows Docuseries International TV Shows",
   "International TV Shows Romantic TV Shows TV Dramas",
+  "Kids' TV",
+  "Language TV Shows",
+  "Reality TV",
+  "TV Action",
+  "TV Comedies",
+  "TV Dramas",
+  "Talk Shows TV Comedies",
 ];
 
 const DOCUMENTARY_GENRES = [
-  "Documentaries",
-  "Docuseries",
   "Crime TV Shows Docuseries",
+  "Documentaries",
+  "Documentaries International Movies",
+  "Docuseries",
   "Nature TV",
   "Spirituality",
-  "Documentaries International Movies",
 ];
 
 // Helper to clean label

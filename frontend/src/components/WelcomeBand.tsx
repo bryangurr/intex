@@ -76,6 +76,18 @@ function WelcomeBand() {
           id="navbarContent"
         >
           <ul className="navbar-nav d-flex flex-row gap-4 mx-auto">
+            {window.history.length > 1 && (
+              <li className="nav-item">
+                <span
+                  className="nav-link fs-4 active"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(-1)}
+                >
+                  ← Back
+                </span>
+              </li>
+            )}
+
             <li className="nav-item">
               <span
                 className="nav-link fs-4 active"

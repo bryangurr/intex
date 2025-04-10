@@ -1,4 +1,4 @@
-.movie-carousel-wrapper {
+.movie-carousel-wrapper1 {
   position: relative;
   padding-top: 1rem;
   padding-bottom: 2rem;
@@ -6,23 +6,83 @@
   background: transparent;
 }
 
-.carousel-title {
+/* New carousel-img styling */
+.carousel-img1 {
+  width: 250px;
+  min-width: 225px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-link:hover .carousel-img1 {
+  transform: scale(1.03);
+
+}
+
+/* Overlay on hover */
+.carousel-link {
+  position: relative;
+  display: inline-block;
+}
+
+.carousel-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: white;
+  opacity: 0;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-link:hover .carousel-hover-overlay {
+  opacity: 1;
+}
+
+.carousel-hover-title {
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+
+/* Movie title underneath */
+.carousel-title1 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  margin-top: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Scroll Buttons */
 .scroll-btn {
   position: absolute;
+  height: 100px;
+  width: 50px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(199, 0, 255, 0.8);
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   color: white;
   font-size: 2rem;
   cursor: pointer;
   padding: 0.25rem 0.75rem;
-  border-radius: 50%;
+  border-radius: 10%;
   transition:
     background-color 0.2s,
     transform 0.2s;
@@ -30,7 +90,7 @@
 }
 
 .scroll-btn:hover {
-  background: rgba(199, 0, 255, 1);
+  background: rgba(199, 0, 255, 0.5);
   transform: translateY(-50%) scale(1.1);
 }
 
