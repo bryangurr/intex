@@ -1,4 +1,5 @@
 ﻿using Intex.API.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -318,6 +319,56 @@ namespace Intex.API.Controllers
             return NoContent();
         }
 
+
+        [HttpGet("byEmail/{email}")]
+        public async Task<IActionResult> GetUserDetails(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return BadRequest("Email is required.");
+
+            try
+            {
+                // First, confirm the user exists in AspNetUsers
+                var aspNetUser = await _moviesContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+                if (aspNetUser == null)
+                    return NotFound("User not found in identity system.");
+
+                // Then, confirm the user exists in your movies_users table
+                var moviesUser = await _moviesContext.movies_users.FirstOrDefaultAsync(mu => mu.email == email);
+                if (moviesUser == null)
+                    return NotFound("User email not found in movies_users table.");
+
+                // Get role names (can be empty)
+                var userRoles = await (
+                    from AspNetUserRoles in _moviesContext.UserRoles
+                    join AspNetRoles in _moviesContext.Roles on AspNetUserRoles.RoleId equals AspNetRoles.Id
+                    where AspNetUserRoles.UserId == aspNetUser.Id
+                    select AspNetRoles.Name
+                ).ToListAsync();
+
+                // If no roles assigned, default to "user"
+                if (userRoles == null || userRoles.Count() == 0)
+                {
+                    userRoles = new List<string> { "user" };
+                }
+
+                return Ok(new
+                {
+                    email = aspNetUser.Email,
+                    name = moviesUser.name,
+                    id = moviesUser.user_id,
+                    roles = userRoles
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error fetching user details: " + ex.Message);
+            }
+        }
+
     }
+
+
+
 
 }
