@@ -1,4 +1,3 @@
-import AuthorizeView from "./AuthorizeView";
 import WelcomeBand from "./WelcomeBand";
 
 const PrivacyPolicy = () => {

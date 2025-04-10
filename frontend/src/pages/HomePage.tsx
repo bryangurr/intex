@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import WelcomeBand from "../components/WelcomeBand";
 import "../components/GenreCards.css";
-import AuthorizeView from "../components/AuthorizeView";
 
 const mockMovies = [
   { id: 1, title: "Personalized Recommendations", genre: "More of what you like" },
