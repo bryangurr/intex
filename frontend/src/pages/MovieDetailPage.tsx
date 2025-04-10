@@ -145,7 +145,11 @@ const MovieDetailPage: React.FC = () => {
               const recImageSrc = `https://inteximages47.blob.core.windows.net/uploads/${sanitizeTitleForBlob(rec.title)}.jpg`;
               return (
                 <div key={rec.show_id} className="px-1">
-                  <Link to={`/movie/${rec.show_id}`} className="carousel-link block">
+                  <Link 
+                    to={`/movie/${rec.show_id}`} 
+                    className="carousel-link block"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  >
                     <img
                       src={recImageSrc}
                       alt={`Recommended movie ${rec.title}`}
