@@ -28,3 +28,28 @@
   opacity: 0.4;
   pointer-events: none;
 }
+
+.admin-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.admin-card:hover .admin-card-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.admin-card .movie-card-body,
+.admin-card .genre-badges {
+  position: relative;
+  z-index: 2;
+}

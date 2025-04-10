@@ -6,7 +6,8 @@ import { Movie } from "../types/Movie";
 // }
 
 const API_URL =
-  "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetAllMovies"; // Replace with your actual .NET endpoint
+  "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies";
+  // "https://localhost:5000/api/Movies"; // Replace with your actual .NET endpoint
 export const fetchMovies = async (
   pageSize: number,
   pageNum: number,
@@ -18,7 +19,7 @@ export const fetchMovies = async (
       .join("&");
 
     const response = await fetch(
-      `${API_URL}?pageSize=${pageSize}&pageNum=${pageNum}${
+      `${API_URL}/GetAllMovies?pageSize=${pageSize}&pageNum=${pageNum}${
         selectedGenres.length ? `&${genreParams}` : ""
       }`
     );
@@ -66,11 +67,11 @@ export const addMovie = async (newMovie: Movie): Promise<Movie> => {
 };
 
 export const updateMovie = async (
-  movieID: number,
+  show_id: number,
   updatedMovie: Movie
 ): Promise<Movie> => {
   try {
-    const response = await fetch(`${API_URL}/UpdateMovie/${movieID}`, {
+    const response = await fetch(`${API_URL}/UpdateMovie/${show_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -89,9 +90,9 @@ export const updateMovie = async (
   }
 };
 
-export const deleteMovie = async (movieID: number): Promise<void> => {
+export const deleteMovie = async (show_id: number): Promise<void> => {
   try {
-    const response = await fetch(`${API_URL}/DeleteMovie/${movieID}`, {
+    const response = await fetch(`${API_URL}/DeleteMovie/${show_id}`, {
       method: "DELETE",
     });
 

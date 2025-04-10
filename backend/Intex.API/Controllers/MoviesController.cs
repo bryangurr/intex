@@ -36,6 +36,7 @@ namespace Intex.API.Controllers
             _moviesContext = moviesContext;
             _recommendContext = recommendationContext;
             _userRecommendationsContext = userRecommendationsContext;
+            Console.WriteLine("[DEBUG] MoviesController Initialized");
         }
 
 
@@ -83,10 +84,10 @@ namespace Intex.API.Controllers
 
         [HttpGet("GetAllMovies")]
         public IActionResult GetAllMovies(
-    [FromQuery] int pageSize = 10,
-    [FromQuery] int pageNum = 1,
-    [FromQuery] List<string>? genre = null)
-        {
+        [FromQuery] int pageSize = 10,
+        [FromQuery] int pageNum = 1,
+        [FromQuery] List<string>? genre = null)
+            {
 
 
             if (pageSize <= 0 || pageNum <= 0)
@@ -151,31 +152,7 @@ namespace Intex.API.Controllers
             });
         }
 
-        // [HttpGet("RelatedCarousel/{showId}")]
-        // public async Task<IActionResult> GetRelatedShows(int showId)
-        // {
-        //     // This DbContext should be tied to your OTHER database
-        //     var show = await _recommendContext.recommendations
-        //         .FirstOrDefaultAsync(r => r.show_id == showId);
-
-        //     if (show == null || string.IsNullOrEmpty(show.recommended_show_ids))
-        //         return NotFound("No related shows found.");
-
-        //     // Split CSV string into int list
-        //     var ids = show.recommended_show_ids
-        //         .Split(',', StringSplitOptions.RemoveEmptyEntries)
-        //         .Select(id => int.TryParse(id, out var num) ? num : (int?)null)
-        //         .Where(id => id.HasValue)
-        //         .Select(id => id.Value)
-        //         .ToList();
-
-        //     // Use your main Movies DB context to fetch the actual show data
-        //     var relatedMovies = await _moviesContext.movies_titles
-        //         .Where(m => ids.Contains(m.show_id))
-        //         .ToListAsync();
-
-        //     return Ok(relatedMovies);
-        // }
+        
         [HttpGet("RelatedCarousel/{showId}")]
         public async Task<IActionResult> GetRelatedShows(int showId)
         {
@@ -224,7 +201,7 @@ namespace Intex.API.Controllers
             {
                 Console.WriteLine($"[ERROR] Exception in GetRelatedShows({showId}): {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return StatusCode(500, "An error occurred while processing your request: " + ex.Message + " ------ " + ex.StackTrace);
             }
         }
 
@@ -262,63 +239,85 @@ namespace Intex.API.Controllers
         }
 
 
+        [HttpPut("UpdateMovie/{show_id}")]
+        public IActionResult UpdateMovie(int show_id, [FromBody] movies_titles updatedMovie)
+        {
+            var existingMovie = _moviesContext.movies_titles.Find(show_id);
 
+            //if (existingMovie == null)
+            //{
+            //    return NotFound();
+            //}
+            existingMovie.type = updatedMovie.type;
+            existingMovie.title = updatedMovie.title;
+            existingMovie.director = updatedMovie.director;
+            existingMovie.cast = updatedMovie.cast;
+            existingMovie.country = updatedMovie.country;
+            existingMovie.release_year = updatedMovie.release_year;
+            existingMovie.rating = updatedMovie.rating;
+            existingMovie.duration = updatedMovie.duration;
+            existingMovie.description = updatedMovie.description;
+            existingMovie.Action = updatedMovie.Action;
+            existingMovie.Adventure = updatedMovie.Adventure;
+            existingMovie.Anime_Series_International_TV_Shows = updatedMovie.Anime_Series_International_TV_Shows;
+            existingMovie.British_TV_Shows_Docuseries_International_TV_Shows = updatedMovie.British_TV_Shows_Docuseries_International_TV_Shows;
+            existingMovie.Children = updatedMovie.Children;
+            existingMovie.Comedies = updatedMovie.Comedies;
+            existingMovie.Comedies_Dramas_International_Movies = updatedMovie.Comedies_Dramas_International_Movies;
+            existingMovie.Comedies_International_Movies = updatedMovie.Comedies_International_Movies;
+            existingMovie.Comedies_Romantic_Movies = updatedMovie.Comedies_Romantic_Movies;
+            existingMovie.Crime_TV_Shows_Docuseries = updatedMovie.Crime_TV_Shows_Docuseries;
+            existingMovie.Documentaries = updatedMovie.Documentaries;
+            existingMovie.Documentaries_International_Movies = updatedMovie.Documentaries_International_Movies;
+            existingMovie.Docuseries = updatedMovie.Docuseries;
+            existingMovie.Dramas = updatedMovie.Dramas;
+            existingMovie.Dramas_International_Movies = updatedMovie.Dramas_International_Movies;
+            existingMovie.Dramas_Romantic_Movies = updatedMovie.Dramas_Romantic_Movies;
+            existingMovie.Family_Movies = updatedMovie.Family_Movies;
+            existingMovie.Fantasy = updatedMovie.Fantasy;
+            existingMovie.Horror_Movies = updatedMovie.Horror_Movies;
+            existingMovie.International_Movies_Thrillers = updatedMovie.International_Movies_Thrillers;
+            existingMovie.International_TV_Shows_Romantic_TV_Shows_TV_Dramas = updatedMovie.International_TV_Shows_Romantic_TV_Shows_TV_Dramas;
+            existingMovie.Kids_TV = updatedMovie.Kids_TV;
+            existingMovie.Language_TV_Shows = updatedMovie.Language_TV_Shows;
+            existingMovie.Musicals = updatedMovie.Musicals;
+            existingMovie.Nature_TV = updatedMovie.Nature_TV;
+            existingMovie.Reality_TV = updatedMovie.Reality_TV;
+            existingMovie.Spirituality = updatedMovie.Spirituality;
+            existingMovie.TV_Action = updatedMovie.TV_Action;
+            existingMovie.TV_Comedies = updatedMovie.TV_Comedies;
+            existingMovie.TV_Dramas = updatedMovie.TV_Dramas;
+            existingMovie.Talk_Shows_TV_Comedies = updatedMovie.Talk_Shows_TV_Comedies;
+            existingMovie.Thrillers = updatedMovie.Thrillers;
+            existingMovie.Genre = updatedMovie.Genre;
+            existingMovie.Ratings_Avg = updatedMovie.Ratings_Avg;
 
-        //    [HttpGet("GetMoviesByGenre")]
-        //    public IActionResult GetMoviesByGenre(string genre)
-        //    {
-        //        try
-        //        {
-        //            IQueryable<movies_titles> query = genre.ToLower() switch
-        //            {
-        //                "action" => _moviesContext.movies_titles.Where(m => m.Action == 1),
-        //                "adventure" => _moviesContext.movies_titles.Where(m => m.Adventure == 1),
-        //                "anime series international tv shows" => _moviesContext.movies_titles.Where(m => m.Anime_Series_International_TV_Shows == 1),
-        //                "british tv shows docuseries international tv shows" => _moviesContext.movies_titles.Where(m => m.British_TV_Shows_Docuseries_International_TV_Shows == 1),
-        //                "children" => _moviesContext.movies_titles.Where(m => m.Children == 1),
-        //                "comedies" => _moviesContext.movies_titles.Where(m => m.Comedies == 1),
-        //                "comedies dramas international movies" => _moviesContext.movies_titles.Where(m => m.Comedies_Dramas_International_Movies == 1),
-        //                "comedies international movies" => _moviesContext.movies_titles.Where(m => m.Comedies_International_Movies == 1),
-        //                "comedies romantic movies" => _moviesContext.movies_titles.Where(m => m.Comedies_Romantic_Movies == 1),
-        //                "crime tv shows docuseries" => _moviesContext.movies_titles.Where(m => m.Crime_TV_Shows_Docuseries == 1),
-        //                "documentaries" => _moviesContext.movies_titles.Where(m => m.Documentaries == 1),
-        //                "documentaries international movies" => _moviesContext.movies_titles.Where(m => m.Documentaries_International_Movies == 1),
-        //                "docuseries" => _moviesContext.movies_titles.Where(m => m.Docuseries == 1),
-        //                "dramas" => _moviesContext.movies_titles.Where(m => m.Dramas == 1),
-        //                "dramas international movies" => _moviesContext.movies_titles.Where(m => m.Dramas_International_Movies == 1),
-        //                "dramas romantic movies" => _moviesContext.movies_titles.Where(m => m.Dramas_Romantic_Movies == 1),
-        //                "family movies" => _moviesContext.movies_titles.Where(m => m.Family_Movies == 1),
-        //                "fantasy" => _moviesContext.movies_titles.Where(m => m.Fantasy == 1),
-        //                "horror movies" => _moviesContext.movies_titles.Where(m => m.Horror_Movies == 1),
-        //                "international movies thrillers" => _moviesContext.movies_titles.Where(m => m.International_Movies_Thrillers == 1),
-        //                "international tv shows romantic tv shows tv dramas" => _moviesContext.movies_titles.Where(m => m.International_TV_Shows_Romantic_TV_Shows_TV_Dramas == 1),
-        //                "kids tv" => _moviesContext.movies_titles.Where(m => m.Kids_TV == 1),
-        //                "language tv shows" => _moviesContext.movies_titles.Where(m => m.Language_TV_Shows == 1),
-        //                "musicals" => _moviesContext.movies_titles.Where(m => m.Musicals == 1),
-        //                "nature tv" => _moviesContext.movies_titles.Where(m => m.Nature_TV == 1),
-        //                "reality tv" => _moviesContext.movies_titles.Where(m => m.Reality_TV == 1),
-        //                "spirituality" => _moviesContext.movies_titles.Where(m => m.Spirituality == 1),
-        //                "tv action" => _moviesContext.movies_titles.Where(m => m.TV_Action == 1),
-        //                "tv comedies" => _moviesContext.movies_titles.Where(m => m.TV_Comedies == 1),
-        //                "tv dramas" => _moviesContext.movies_titles.Where(m => m.TV_Dramas == 1),
-        //                "talk shows tv comedies" => _moviesContext.movies_titles.Where(m => m.Talk_Shows_TV_Comedies == 1),
-        //                "thrillers" => _moviesContext.movies_titles.Where(m => m.Thrillers == 1),
-        //                _ => null
-        //            };
+            _moviesContext.movies_titles.Update(existingMovie);
+            _moviesContext.SaveChanges();
 
-        //            if (query == null)
-        //            {
-        //                return BadRequest("Invalid genre specified.");
-        //            }
+            return Ok(existingMovie);
+        }
+        [HttpPost("AddMovie")]
+        public IActionResult AddMovie([FromBody] movies_titles newMovie)
+        {
+            _moviesContext.movies_titles.Add(newMovie);
+            _moviesContext.SaveChanges();
+            return Ok(newMovie);
+        }
+        [HttpDelete("DeleteMovie/{show_id}")]
+        public IActionResult DeleteMovie(int show_id)
+        {
+            var movie = _moviesContext.movies_titles.Find(show_id);
+            if (movie == null)
+            {
+                return NotFound
+                (new { message = "Movie not found" });
+            }
+            _moviesContext.movies_titles.Remove(movie);
+            _moviesContext.SaveChanges();
+            return NoContent();
+        }
 
-        //            var movies = query.ToList();
-        //            return Ok(movies);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return StatusCode(500, "Internal Server Error: " + ex.Message);
-        //        }
-        //    }
     }
 
 }

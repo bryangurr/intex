@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./WelcomeBand.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-// import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
@@ -17,7 +17,7 @@ function WelcomeBand() {
 
     try {
       const response = await fetch(
-        `https://localhost:5000/api/Movies/Search?query=${encodeURIComponent(searchTerm)}`
+        `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/Search?query=${encodeURIComponent(searchTerm)}`
       );
       const data = await response.json();
 
@@ -76,6 +76,18 @@ function WelcomeBand() {
           id="navbarContent"
         >
           <ul className="navbar-nav d-flex flex-row gap-4 mx-auto">
+            {window.history.length > 1 && (
+              <li className="nav-item">
+                <span
+                  className="nav-link fs-4 active"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(-1)}
+                >
+                  ← Back
+                </span>
+              </li>
+            )}
+
             <li className="nav-item">
               <span
                 className="nav-link fs-4 active"
