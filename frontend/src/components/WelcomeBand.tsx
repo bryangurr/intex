@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./WelcomeBand.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-// import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
@@ -200,7 +200,8 @@ function WelcomeBand() {
               <li>
                 <button className="bg-secondary text-white border-0 rounded-3 px-3 py-2">
                   <Logout>
-                    Logout <AuthorizedUser value="email" />
+                    Logout <AuthorizedUser value="email" />{" "}
+                    <AuthorizedUser value="roles" />
                   </Logout>
                 </button>
               </li>

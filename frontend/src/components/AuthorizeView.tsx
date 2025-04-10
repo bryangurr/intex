@@ -5,13 +5,14 @@ const UserContext = createContext<User | null>(null);
 
 interface User {
   email: string;
+  roles: string[];
 }
 
 function AuthorizeView(props: { children: React.ReactNode }) {
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true); // add a loading state
   //const navigate = useNavigate();
-  let emptyuser: User = { email: "" };
+  let emptyuser: User = { email: "", roles: [] };
 
   const [user, setUser] = useState(emptyuser);
 
@@ -31,7 +32,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         const data = await response.json();
 
         if (data.email) {
-          setUser({ email: data.email });
+          setUser({ email: data.email, roles: data.roles || [] });
           setAuthorized(true);
         } else {
           throw new Error("Invalid user session");
@@ -70,7 +71,11 @@ export function AuthorizedUser(props: { value: string }) {
 
   if (!user) return null; // Prevents errors if context is null
 
-  return props.value === "email" ? <>{user.email}</> : null;
+  if (props.value === "email") return <>{user.email}</>;
+
+  if (props.value === "roles") return <>{user.roles.join(", ")}</>;
+
+  return null;
 }
 
 export default AuthorizeView;
