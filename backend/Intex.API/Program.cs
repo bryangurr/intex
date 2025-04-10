@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Intex.API.Data;
 using Intex.API.Services;
+using DotNetEnv;
+
+Env.Load();
+
+Console.WriteLine("IDENTITY_CONNECTION: " + Environment.GetEnvironmentVariable("IDENTITY_CONNECTION"));
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +20,10 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<MoviesDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MoviesConnection")));
+    options.UseSqlServer(Environment.GetEnvironmentVariable("MOVIES_CONNECTION")));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+    options.UseSqlServer(Environment.GetEnvironmentVariable("IDENTITY_CONNECTION")));
 
 builder.Services.AddDbContext<RecommendationsDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("RecommendationsDb")));

@@ -7,6 +7,7 @@
 /backend/Intex.API/*.log
 # /backend/Intex.API/*.sqlite
 # /backend/Intex.API/Identity.sqlite-shm
+**/.env*
 
 # React frontend
 /frontend/node_modules/
