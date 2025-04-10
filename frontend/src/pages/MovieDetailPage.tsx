@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Movie } from "../types/Movie";
-import "../components/MovieDetailPage.css"; 
+import "../components/MovieDetailPage.css";
 import WelcomeBand from "../components/WelcomeBand";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-// Base64 placeholder image
+// Base64 placeholder image URL (or external URL)
 const PLACEHOLDER_IMAGE =
-  'https://inteximages47.blob.core.windows.net/uploads/default movie.jpg';
+  "https://inteximages47.blob.core.windows.net/uploads/default movie.jpg";
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -19,23 +19,23 @@ const MovieDetailPage: React.FC = () => {
   // Track recommendations that had a failed image load by movie ID
   const [failedRecommendations, setFailedRecommendations] = useState<Set<number>>(new Set());
 
+  // Create a ref for the slider
+  const sliderRef = useRef<Slider>(null);
+
   // Helper function to sanitize movie titles for URL usage in blob storage.
   // This version removes colons and replaces spaces with %20, preserving accented characters.
   const sanitizeTitleForBlob = (title: string) => {
     return title
-      .replace(/[^\p{L}\p{N}:\- ]/gu, "") // Allow letters, numbers, colon, hyphen, and space
-      .replace(/:/g, "")                  // Remove colons
-      .replace(/ /g, "%20");              // Replace spaces with %20
+      .replace(/[^\p{L}\p{N}: \-]/gu, "") // allow Unicode letters, numbers, colon, space, and hyphen
+      .replace(/:/g, "")                 // Remove colons
+      .replace(/ /g, "%20");             // Replace spaces with %20
   };
-  
+
   // Fetch related movies using AbortController
   useEffect(() => {
     if (!id) return;
     const controller = new AbortController();
-    fetch(
-      `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/RelatedCarousel/${id}`,
-      { signal: controller.signal }
-    )
+    fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/RelatedCarousel/${id}`, { signal: controller.signal })
       .then((res) => res.json())
       .then((data: Movie[]) => setRecommendations(data))
       .catch((err) => {
@@ -50,10 +50,7 @@ const MovieDetailPage: React.FC = () => {
   useEffect(() => {
     if (!id) return;
     const controller = new AbortController();
-    fetch(
-      `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetMovie/${id}`,
-      { signal: controller.signal }
-    )
+    fetch(`https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/GetMovie/${id}`, { signal: controller.signal })
       .then((response) => response.json())
       .then((data: Movie) => setMovie(data))
       .catch((error) => {
@@ -123,9 +120,7 @@ const MovieDetailPage: React.FC = () => {
   return (
     <div className="bg-gray-900 text-white min-h-screen">
       <WelcomeBand />
-      <br />
-      <br />
-      <br />
+      <br /><br /><br />
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Main Movie Details */}
         <div className="flex flex-col md:flex-row gap-8">
@@ -138,18 +133,10 @@ const MovieDetailPage: React.FC = () => {
               <hr className="movie-divider" />
               <p className="movie-description">{movie.description}</p>
               <div className="movie-details-grid">
-                <div>
-                  <strong>Genre:</strong> {movie.genre}
-                </div>
-                <div>
-                  <strong>Country:</strong> {movie.country}
-                </div>
-                <div>
-                  <strong>Director:</strong> {movie.director}
-                </div>
-                <div>
-                  <strong>Avg. Rating:</strong> {displayedRating}
-                </div>
+                <div><strong>Genre:</strong> {movie.genre}</div>
+                <div><strong>Country:</strong> {movie.country}</div>
+                <div><strong>Director:</strong> {movie.director}</div>
+                <div><strong>Avg. Rating:</strong> {displayedRating}</div>
                 <div className="user-rating-section mt-4">
                   <h3 className="text-lg font-semibold mb-1 text-black">Your Rating:</h3>
                   <div>{renderStars(userRating, setUserRating)}</div>
@@ -174,15 +161,14 @@ const MovieDetailPage: React.FC = () => {
             </div>
           </div>
         </div>
-        <br />
-        <br />
-        <br />
+        <br /><br /><br />
         {/* Recommendations Carousel */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-4">
             If you liked <span className="text-indigo-400">{movie.title}</span>, you'll also like...
           </h2>
           <Slider
+            ref={sliderRef}
             dots={false}
             infinite={false}
             speed={500}
@@ -196,7 +182,13 @@ const MovieDetailPage: React.FC = () => {
                   <Link
                     to={`/movie/${rec.show_id}`}
                     className="carousel-link block"
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    onClick={() => {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      // Reset the carousel to the beginning whenever a new movie is clicked.
+                      if (sliderRef.current) {
+                        sliderRef.current.slickGoTo(0);
+                      }
+                    }}
                   >
                     <img
                       src={recImageSrc}
