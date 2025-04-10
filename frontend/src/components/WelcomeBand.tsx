@@ -143,7 +143,7 @@ function WelcomeBand() {
 
             <div className="dropdown">
               <img
-                src="https://media.istockphoto.com/id/1345297900/vector/retro-style-gentleman-face-vector-cartoon.jpg"
+                src="https://inteximages47.blob.core.windows.net/uploads/profileImage.jpg"
                 alt="Profile"
                 className="rounded-circle"
                 style={{
