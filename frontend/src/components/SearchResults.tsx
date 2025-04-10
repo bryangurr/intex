@@ -25,17 +25,15 @@ function SearchResults() {
     }
   }, [query]);
 
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.round(rating);
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <span key={i} className="star">
-          {i < fullStars ? "★" : "☆"}
-        </span>
-      );
-    }
-    return stars;
+  const [imageErrorIds, setImageErrorIds] = useState<Set<number>>(new Set());
+  const handleImageError = (showId: number) => {
+    setImageErrorIds((prev) => new Set(prev).add(showId));
+  };
+
+  const sanitizeTitleForBlob = (title: string) => {
+    return title
+      .replace(/[^a-zA-Z0-9 ]/g, "") // Remove special characters
+      .replace(/ /g, "%20"); // URL encode spaces
   };
 
   return (
@@ -50,76 +48,47 @@ function SearchResults() {
           <p>No movies found.</p>
         ) : (
           <div className="movie-grid-row">
-            {results.map((movie) => (
-              <div className="col" key={movie.show_id}>
-                <div className="movie-grid-card">
-                  <div className="d-flex justify-content-end flex-wrap p-2">
-                    {movie.genre &&
-                      movie.genre.split(",").map((g, i) => (
-                        <span
-                          key={`${movie.show_id}-genre-${i}`}
-                          className="badge bg-secondary me-1 mb-1 badge-truncate"
-                          style={{ opacity: 0.5 }}
-                          title={g.trim()}
-                        >
-                          {g.trim()}
-                        </span>
-                      ))}
-                  </div>
+            {results.map((movie) => {
+              const isFallback = imageErrorIds.has(movie.show_id);
+              const posterSrc = isFallback
+                ? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwcIBwgHBwgHBwcICA4HBwcHBw8IDQcNFhEXFxURGBMZHCggGB4lHhYVITEhJSkrLi4uFx8zODMtNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIARMAtwMBIgACEQEDEQH/xAAaAAEBAQEBAQEAAAAAAAAAAAAABAMCBQEH/8QAMhABAAIBAgMFBgUFAQAAAAAAAAECEQMEITOCEhNBUVIUMWFykZIyoaKx4SJjcYHBU//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD8yAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUbbRreJvfjGcRGcZTrtnyuqQca+3pFJtSOzNYzMZzmEj0tSJml4jjM1mIj/AEi9n1vR+qAdbbRjUmbW/DHDEcMyp7jR9EfWXO1palbReMTNsxxy2Bn3Gj6I+sncaPoj6y0AZ9xo+iPrJ3Gj6I+stAEW50Y08Wr+GeGJ44lgu3VLXrWKRmYtmeOE3s+t6P1QDbQ29JpFrx2ptGYjOMQ43OhWkRenCM4muc4VacTFKRPCYrETH+me75XVAIQAAAAAAAAAF2z5XVKFds+V1SDYc6kzWlrR74rMwj9q1fOv2guGO21LalbTbGYtiMRhsAAAAAMdzqW06xNcZm2OMZT+1avnX7QXMd5yuqGmnM2pW0++axMs93yp+aAQgAAAAAAAAALtnyuqUK7Z8rqkGmrEzp3iOMzSYiI8eCDutX0X+2XogMNpW1aWi0TWe1njGPBuAAAAAMN3W1qVisTae1nhGfBL3Wr6L/bL0QHOlExp0ieExSImPLgz3nK6obMd3yuqAQgAAAAAAAAALtnyuqUK7Z8rqkGt57NLWj3xWZhJ7Xf00/NVq8u/yT+zzuzb02+gLtvqzqVmZiIxOODVPsomKWzEx/V4/wCFAAAAAMtxqzp1iYiJzOOLD2u/pp+bTeRM0riJn+rw/wAJOzbyt9AelSe1Stp981iWW85XVDTS5dPkj9me85XVAIQAAAAAAAAAF2z5XVKFds+V1SDYfL27NbW9/ZibY803tn9v9f8AAKhnoaveVmez2cTj35aAAAAADPX1e7rE47WZx78MfbP7f6/4BUx3nKn5oa0t2q1t7u1EWx5Mt5yuqAQgAAAAAAAAALtnyuqUK7Z8rqkHety9T5J/Z5z1DEeUfQE+y/Bb5v8AigAAAAAT738Ffm/4jeoYjyj6A40eXp/JH7ON5yp+aGzHecrqgEIAAAAAAAAAC7Z8rqlCs2domk18YnOPgDe09ms2n3ViZYe109N/yabi0V0r58YmsfGXng9HS1Y1ImYiYxOOLtLsrRi1PHPaiPNUAAAADjV1Y04iZiZzOODL2unpv+T5vbRitPHPamPJID06z2qxaPdMRLLecrqh1t7RbSpjwiKz8JZ7y0RSK+MznHwBGAAAAAAAAAARMxOYmYnwmJwAPtrWtxtM2n4zl8ACJxxjh8Ydd7qeu/3y5Add7qeu/wB8ne6nrv8AfLkB13up67/fJ3up/wCl/vlyATOeM8Z8ZkAH2trV41maz5xOHyZmZzMzM+czkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//Z"
+                : `https://inteximages47.blob.core.windows.net/uploads/${sanitizeTitleForBlob(movie.title)}.jpg`;
 
-                  <div className="movie-card-body">
-                    <h6 className="movie-title">{movie.title}</h6>
+              return (
+                <div className="col" key={movie.show_id}>
+                  <div
+                    className="movie-grid-card position-relative"
+                    onClick={() => navigate(`/movie/${movie.show_id}`)}
+                    role="button"
+                  >
+                    <img
+                      src={posterSrc}
+                      alt={movie.title}
+                      className="poster-img1"
+                      onError={() => handleImageError(movie.show_id)}
+                    />
 
-                    <ul className="list-unstyled text-start movie-details">
-                      <li>
-                        <strong>Director:</strong> {movie.director}
-                      </li>
-                      <li>
-                        <strong>Year:</strong> {movie.release_year}
-                      </li>
-                      <li>
-                        <strong>Duration:</strong> {movie.duration}
-                      </li>
-                      <li>
-                        <strong>Rating:</strong>{" "}
-                        {movie.ratings_Avg === 0 ? (
-                          <span className="text-muted">
-                            No ratings to display
-                          </span>
-                        ) : (
-                          <>
-                            {movie.ratings_Avg.toFixed(1)}{" "}
-                            {renderStars(movie.ratings_Avg)}
-                          </>
-                        )}
-                      </li>
-                    </ul>
-
-                    <button
-                      className="btn btn-primary btn-sm movie-button"
-                      style={{
-                        backgroundColor: "#6411ad",
-                        borderColor: "#6411ad",
-                        opacity: 0.8,
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = "white";
-                        e.currentTarget.style.color = "#a500cc";
-                        e.currentTarget.style.borderColor = "#a500cc";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = "#6411ad";
-                        e.currentTarget.style.color = "white";
-                        e.currentTarget.style.borderColor = "#6411ad";
-                      }}
-                      onClick={() => navigate(`/movie/${movie.show_id}`)}
-                    >
-                      View Details
-                    </button>
+                    <div className="movie-hover-overlay">
+                      <div className="overlay-content">
+                        <h5 className="hover-title">{movie.title}</h5>
+                        <div className="d-flex flex-wrap justify-content-center mt-2">
+                          {movie.genre &&
+                            movie.genre.split(",").map((g, i) => (
+                              <span
+                                key={`${movie.show_id}-genre-${i}`}
+                                className="badge bg-secondary me-1 mb-1 badge-truncate"
+                                title={g.trim()}
+                              >
+                                {g.trim()}
+                              </span>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

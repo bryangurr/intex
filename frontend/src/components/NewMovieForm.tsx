@@ -37,11 +37,25 @@ const genreFlags = [
   "thrillers",
 ];
 
+const ratingOptions = [
+  "G",
+  "PG",
+  "PG-13",
+  "R",
+  "NC-17",
+  "TV-Y",
+  "TV-Y7",
+  "TV-G",
+  "TV-PG",
+  "TV-14",
+  "TV-MA",
+];
+
 const formatGenreLabel = (key: string) =>
   key
     .replace(/_/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase())
-    .replace("Tv", "TV"); // For "TV" capitalization
+    .replace("Tv", "TV");
 
 const NewMovieForm = ({
   onSuccess,
@@ -73,15 +87,12 @@ const NewMovieForm = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
+
+    if (name === "release_year" && value.length > 4) return;
+
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        type === "number" ||
-        name === "release_year" ||
-        name === "ratings_Avg" ||
-        name === "show_id"
-          ? Number(value)
-          : value,
+      [name]: type === "number" ? Number(value) : value,
     }));
   };
 
@@ -116,142 +127,216 @@ const NewMovieForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-2">
-        <label className="form-label">Show ID</label>
-        <input
-          type="number"
-          name="show_id"
-          className="form-control"
-          value={formData.show_id}
-          onChange={handleChange}
-        />
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      className="p-4 rounded"
+      style={{ backgroundColor: "#f2e6ff" }}
+    >
+      <div className="accordion mb-3" id="newMovieAccordion">
+        {/* Show Details */}
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="newHeadingDetails">
+            <button
+              className="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#newCollapseDetails"
+              aria-expanded="true"
+              aria-controls="newCollapseDetails"
+            >
+              Show Details
+            </button>
+          </h2>
+          <div
+            id="newCollapseDetails"
+            className="accordion-collapse collapse show"
+            aria-labelledby="newHeadingDetails"
+            data-bs-parent="#newMovieAccordion"
+          >
+            <div className="accordion-body">
+              {/* Type + Title */}
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Type</label>
+                  <select
+                    name="type"
+                    className="form-select"
+                    value={formData.type}
+                    onChange={handleChange}
+                  >
+                    <option value="Movie">Movie</option>
+                    <option value="TV Show">TV Show</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    className="form-control"
+                    value={formData.title}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-      <div className="mb-2">
-        <label className="form-label">Title</label>
-        <input
-          type="text"
-          name="title"
-          className="form-control"
-          value={formData.title}
-          onChange={handleChange}
-        />
-      </div>
+              {/* Director + Cast */}
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Director</label>
+                  <input
+                    type="text"
+                    name="director"
+                    className="form-control"
+                    value={formData.director}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Cast</label>
+                  <input
+                    type="text"
+                    name="cast"
+                    className="form-control"
+                    value={formData.cast}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-      <div className="mb-2">
-        <label className="form-label">Director</label>
-        <input
-          type="text"
-          name="director"
-          className="form-control"
-          value={formData.director}
-          onChange={handleChange}
-        />
-      </div>
+              {/* Country + Release Year */}
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Country</label>
+                  <input
+                    type="text"
+                    name="country"
+                    className="form-control"
+                    value={formData.country}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Release Year</label>
+                  <input
+                    type="number"
+                    name="release_year"
+                    className="form-control"
+                    value={formData.release_year}
+                    onChange={handleChange}
+                    min={1900}
+                    max={2100}
+                  />
+                </div>
+              </div>
 
-      <div className="mb-2">
-        <label className="form-label">Cast</label>
-        <input
-          type="text"
-          name="cast"
-          className="form-control"
-          value={formData.cast}
-          onChange={handleChange}
-        />
-      </div>
+              {/* Rating + Duration */}
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Rating</label>
+                  <select
+                    name="rating"
+                    className="form-select"
+                    value={formData.rating}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Rating</option>
+                    {ratingOptions.map((r) => (
+                      <option key={r} value={r}>
+                        {r}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Duration</label>
+                  <input
+                    type="text"
+                    name="duration"
+                    className="form-control"
+                    value={formData.duration}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-      <div className="mb-2">
-        <label className="form-label">Country</label>
-        <input
-          type="text"
-          name="country"
-          className="form-control"
-          value={formData.country}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="mb-2">
-        <label className="form-label">Release Year</label>
-        <input
-          type="number"
-          name="release_year"
-          className="form-control"
-          value={formData.release_year}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="mb-2">
-        <label className="form-label">Rating Type</label>
-        <input
-          type="text"
-          name="rating"
-          className="form-control"
-          value={formData.rating}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-2">
-        <label className="form-label">Duration</label>
-        <input
-          type="text"
-          name="duration"
-          className="form-control"
-          value={formData.duration}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="mb-2">
-        <label className="form-label">Description</label>
-        <input
-          type="text"
-          name="description"
-          className="form-control"
-          value={formData.description}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* Hidden genre input */}
-      <input type="hidden" name="genre" value={formData.genre} />
-
-      <div className="mb-2">
-        <label className="form-label">Ratings Average</label>
-        <input
-          type="number"
-          name="ratings_Avg"
-          className="form-control"
-          step="0.1"
-          value={formData.ratings_Avg}
-          onChange={handleChange}
-        />
-      </div>
-
-      <hr />
-      <h5>Genres (Select applicable)</h5>
-      <div className="row">
-        {genreFlags.map((flag) => (
-          <div key={flag} className="col-6 mb-2">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                name={flag}
-                id={flag}
-                checked={formData[flag as keyof Movie] === 1}
-                onChange={handleCheckboxChange}
-              />
-              <label className="form-check-label" htmlFor={flag}>
-                {formatGenreLabel(flag)}
-              </label>
+              {/* Ratings Avg + Description */}
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Ratings Avg</label>
+                  <input
+                    type="number"
+                    name="ratings_Avg"
+                    step="0.1"
+                    className="form-control"
+                    value={formData.ratings_Avg}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    className="form-control"
+                    value={formData.description}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* Genres Accordion */}
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="newHeadingGenres">
+            <button
+              className="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#newCollapseGenres"
+              aria-expanded="false"
+              aria-controls="newCollapseGenres"
+            >
+              Select Genres
+            </button>
+          </h2>
+          <div
+            id="newCollapseGenres"
+            className="accordion-collapse collapse"
+            aria-labelledby="newHeadingGenres"
+            data-bs-parent="#newMovieAccordion"
+          >
+            <div className="accordion-body">
+              <div className="row">
+                {genreFlags.map((flag) => (
+                  <div key={flag} className="col-md-6 mb-2">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name={flag}
+                        id={flag}
+                        checked={formData[flag as keyof Movie] === 1}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label className="form-check-label" htmlFor={flag}>
+                        {formatGenreLabel(flag)}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* Hidden genre string */}
+      <input type="hidden" name="genre" value={formData.genre} />
+
+      {/* Action Buttons */}
       <div className="d-flex justify-content-end mt-3">
         <button
           type="button"
@@ -260,7 +345,8 @@ const NewMovieForm = ({
         >
           Cancel
         </button>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn"
+        style= {{backgroundColor: "#6f42c1", color: "white"}}>
           Save Movie
         </button>
       </div>
