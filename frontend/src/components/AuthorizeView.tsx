@@ -4,57 +4,84 @@ import { Navigate } from "react-router-dom";
 interface User {
   email: string;
   roles: string[];
+  name: string;
+  id: number;
 }
+
 export const UserContext = createContext<User | null>(null);
 
 function AuthorizeView(props: { children: React.ReactNode }) {
   const [authorized, setAuthorized] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // add a loading state
-  //const navigate = useNavigate();
-  let emptyuser: User = { email: "", roles: [] };
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const [user, setUser] = useState(emptyuser);
+  const emptyUser: User = { email: "", roles: [], name: "", id: -1 };
+  const [user, setUser] = useState<User>(emptyUser);
 
   useEffect(() => {
-    async function fetchWithRetry(url: string, options: any) {
+    // === 🧪 Dummy login simulation ===
+
+    // Simulate a logged-in user (not admin)
+
+    // const simulatedUser: User = {
+    //   email: "user@example.com",
+    //   roles: ["user"],
+    //   name: "Regular User",
+    //   id: 10,
+    // };
+
+    // // Simulate an admin user
+    // const simulatedUser: User = {
+    //   email: "admin@example.com",
+    //   roles: ["admin", "user"],
+    //   name: "Admin User",
+    //   id: 1,
+    // };
+
+    // // Simulate loading delay
+    // setTimeout(() => {
+    //   setUser(simulatedUser);
+    //   setAuthorized(true);
+    //   setLoading(false);
+    // }, 500); // simulate 0.5s load
+
+    // === 🧪 End simulation ===
+
+    // Uncomment for real backend call (when ready)
+
+    const fetchUser = async () => {
       try {
-        const response = await fetch(url, options);
-        //console.log('AuthorizeView: Raw Response:', response);
+        const authRes = await fetch("https://your-backend.com/pingauth", {
+          method: "GET",
+          credentials: "include",
+        });
 
-        const contentType = response.headers.get("content-type");
+        if (!authRes.ok) throw new Error("Unauthorized");
 
-        // Ensure response is JSON before parsing
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Invalid response format from server");
-        }
+        const authData = await authRes.json();
+        const userDetailsRes = await fetch(
+          `https://your-backend.com/api/Users/byEmail/${authData.email}`
+        );
+        const userDetails = await userDetailsRes.json();
 
-        const data = await response.json();
-
-        if (data.email) {
-          setUser({ email: data.email, roles: data.roles || [] });
-          setAuthorized(true);
-        } else {
-          throw new Error("Invalid user session");
-        }
-      } catch (error) {
+        setUser({
+          email: authData.email,
+          roles: authData.roles || [],
+          name: userDetails.name || "User",
+          id: userDetails.id || -1,
+        });
+        setAuthorized(true);
+      } catch (err) {
+        console.error("Auth failed", err);
         setAuthorized(false);
       } finally {
         setLoading(false);
       }
-    }
+    };
 
-    fetchWithRetry(
-      "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/pingauth",
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    fetchUser();
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  if (loading) return <p>Loading...</p>;
 
   if (authorized) {
     return (
@@ -65,16 +92,24 @@ function AuthorizeView(props: { children: React.ReactNode }) {
   return <Navigate to="/login" />;
 }
 
-export function AuthorizedUser(props: { value: string }) {
+export function AuthorizedUser(props: {
+  value: "email" | "name" | "id" | "roles";
+}) {
   const user = React.useContext(UserContext);
+  if (!user) return null;
 
-  if (!user) return null; // Prevents errors if context is null
-
-  if (props.value === "email") return <>{user.email}</>;
-
-  if (props.value === "roles") return <>{user.roles.join(", ")}</>;
-
-  return null;
+  switch (props.value) {
+    case "email":
+      return <>{user.email}</>;
+    case "name":
+      return <>{user.name}</>;
+    case "id":
+      return <>{user.id}</>;
+    case "roles":
+      return <>{user.roles.join(", ")}</>;
+    default:
+      return null;
+  }
 }
 
 export default AuthorizeView;

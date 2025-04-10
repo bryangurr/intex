@@ -1,47 +1,26 @@
-import { useState, useEffect } from "react";
-import WelcomeBand from "../components/WelcomeBand";
-import "./MoviePage.css";
-import AuthorizeView from "../components/AuthorizeView"; // TODO -> Uncomment this and the other <AuthorizeView>s to force users to authenticate.
-import GenreFilterDropdown from "../components/GenreFilter";
+import React from "react";
+import { useUser } from "../components/AuthorizeView";
+import { Navigate } from "react-router-dom";
 import AdminList from "../components/AdminList";
+import WelcomeBand from "../components/WelcomeBand";
 
-const AdminMoviePage = () => {
-  useEffect(() => {
-    document.body.classList.add("movie-page");
+const AdminPage = () => {
+  const user = useUser();
 
-    return () => {
-      document.body.classList.remove("movie-page");
-    };
-  }, []);
-
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  // Don't allow access unless user is logged in *and* has admin role
+  if (!user || !user.roles.includes("admin")) {
+    return <Navigate to="/unauthorized" replace />;
+  }
 
   return (
     <>
-      <AuthorizeView>
-        <WelcomeBand />
-
-        <div className="container" style={{ paddingTop: "100px" }}>
-          <div className="row mt-2">
-            <div className="col-12 d-flex">
-              <div className="genre-filter-wrapper">
-                <GenreFilterDropdown
-                  selectedGenres={selectedGenres}
-                  onChange={setSelectedGenres}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="row mt-4">
-            <div className="col-12 d-flex justify-content-center">
-              <AdminList selectedGenres={selectedGenres} />
-            </div>
-          </div>
-        </div>
-      </AuthorizeView>
+      <WelcomeBand />
+      <div className="container mt-5 pt-5 text-white">
+        <h2 className="text-white mb-4">Admin Dashboard</h2>
+        <AdminList selectedGenres={[]} />
+      </div>
     </>
   );
 };
 
-export default AdminMoviePage;
+export default AdminPage;

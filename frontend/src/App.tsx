@@ -15,6 +15,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SearchResults from "./components/SearchResults";
 import CookieBanner from "./components/CookieBanner";
+import AuthorizeView from "./components/AuthorizeView";
+import WelcomeBand from "./components/WelcomeBand";
+import Unauthorized from "./components/Unauthorized";
 
 function App() {
   return (
@@ -23,14 +26,32 @@ function App() {
         <CookieBanner />
         <Routes>
           <Route path="/Home" element={<HomePage />} />
+          // App.tsx or routes
           <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviePage />} />
-          <Route path="/admin" element={<AdminMoviePage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route
+            path="/movies"
+            element={
+              <AuthorizeView>
+                <WelcomeBand />
+                <MoviePage />
+              </AuthorizeView>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AuthorizeView>
+                <WelcomeBand />
+                <AdminMoviePage />
+              </AuthorizeView>
+            }
+          />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/search" element={<SearchResults />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/movie/:id" element={<MovieDetailPage />} />
         </Routes>
         <Footer />
