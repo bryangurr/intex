@@ -39,8 +39,8 @@ function Register() {
       setError("");
       // post data to the /register api
       fetch(
-        // "https://localhost:5000/register?useCookies=true", // Comment out for deployment or testing server
-        "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true", // Comment out for localhost testing
+        "https://localhost:5000/register?useCookies=true", // Comment out for deployment or testing server
+        // "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/register?useCookies=true", // Comment out for localhost testing
         {
           method: "POST",
           credentials: "include", // <== VERY important
