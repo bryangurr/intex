@@ -44,11 +44,10 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-     ? 
-     // ? "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
-      // : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
-      "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true" // Comment out for localhost testing
-    : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true"; // Comment out for localhost testing
+      ? // ? "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
+        // : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
+        "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true" // Comment out for localhost testing
+      : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true"; // Comment out for localhost testing
 
     try {
       const response = await fetch(loginUrl, {

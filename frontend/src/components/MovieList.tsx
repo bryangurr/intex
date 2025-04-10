@@ -72,7 +72,7 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
 
           const isFallback = imageErrorIds.has(movie.show_id);
           const posterSrc = isFallback
-            ? "/default-movie.jpg"
+            ? "https://inteximages47.blob.core.windows.net/uploads/default-movie.jpg"
             : `https://inteximages47.blob.core.windows.net/uploads/${sanitizeTitleForBlob(movie.title)}.jpg`;
 
           return (

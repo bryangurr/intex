@@ -62,7 +62,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 
         const authData = await authRes.json();
         const userDetailsRes = await fetch(
-          `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/${authData.email}`
+          `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/byEmail/${authData.email}`
         );
         const userDetails = await userDetailsRes.json();
 
