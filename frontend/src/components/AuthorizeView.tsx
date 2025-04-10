@@ -50,16 +50,19 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 
     const fetchUser = async () => {
       try {
-        const authRes = await fetch("https://your-backend.com/pingauth", {
-          method: "GET",
-          credentials: "include",
-        });
+        const authRes = await fetch(
+          "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/pingauth",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (!authRes.ok) throw new Error("Unauthorized");
 
         const authData = await authRes.json();
         const userDetailsRes = await fetch(
-          `https://your-backend.com/api/Users/byEmail/${authData.email}`
+          `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/${authData.email}`
         );
         const userDetails = await userDetailsRes.json();
 
