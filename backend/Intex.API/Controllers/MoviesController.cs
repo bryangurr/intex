@@ -84,10 +84,10 @@ namespace Intex.API.Controllers
 
         [HttpGet("GetAllMovies")]
         public IActionResult GetAllMovies(
-    [FromQuery] int pageSize = 10,
-    [FromQuery] int pageNum = 1,
-    [FromQuery] List<string>? genre = null)
-        {
+        [FromQuery] int pageSize = 10,
+        [FromQuery] int pageNum = 1,
+        [FromQuery] List<string>? genre = null)
+            {
 
 
             if (pageSize <= 0 || pageNum <= 0)

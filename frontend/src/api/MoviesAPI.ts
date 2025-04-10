@@ -6,7 +6,8 @@ import { Movie } from "../types/Movie";
 // }
 
 const API_URL =
-  "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies"; // Replace with your actual .NET endpoint
+  "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies";
+  // "https://localhost:5000/api/Movies"; // Replace with your actual .NET endpoint
 export const fetchMovies = async (
   pageSize: number,
   pageNum: number,
