@@ -61,17 +61,27 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         if (!authRes.ok) throw new Error("Unauthorized");
 
         const authData = await authRes.json();
-        const userDetailsRes = await fetch(
-          `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/byEmail/${authData.email}`
-        );
-        const userDetails = await userDetailsRes.json();
+        try {
+          const userDetailsRes = await fetch(
+            `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/byEmail/${authData.email}`
+          );
+          const userDetails = await userDetailsRes.json();
 
-        setUser({
-          email: authData.email,
-          roles: authData.roles || [],
-          name: userDetails.name || "User",
-          id: userDetails.id || -1,
-        });
+          setUser({
+            email: authData.email,
+            roles: authData.roles || [],
+            name: userDetails.name || "User",
+            id: userDetails.id || -1,
+          });
+        } catch {
+          setUser({
+            email: authData.email,
+            roles: [],
+            name: authData.email,
+            id: 50,
+          });
+        }
+
         setAuthorized(true);
         console.log(authData.roles);
         localStorage.setItem("userRoles", JSON.stringify(authData.roles)); // store roles as JSON string
