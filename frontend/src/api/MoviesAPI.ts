@@ -7,7 +7,7 @@ import { Movie } from "../types/Movie";
 
 const API_URL =
   "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies";
-  // "https://localhost:5000/api/Movies"; // Replace with your actual .NET endpoint
+// "https://localhost:5000/api/Movies"; // Replace with your actual .NET endpoint
 export const fetchMovies = async (
   pageSize: number,
   pageNum: number,
@@ -52,10 +52,13 @@ export const addMovie = async (newMovie: Movie): Promise<Movie> => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include", // 👈 required for sending auth cookies
       body: JSON.stringify(newMovie),
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Backend error:", errorText);
       throw new Error("Failed to add movie");
     }
 
@@ -104,3 +107,25 @@ export const deleteMovie = async (show_id: number): Promise<void> => {
     throw error;
   }
 };
+
+// export const fetchAndStoreUserInfo = async (email: string) => {
+//   try {
+//     const response = await fetch(`${API_URL}/byEmail/${email}`);
+
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch user info");
+//     }
+
+//     const userData = await response.json();
+
+//     localStorage.setItem("userEmail", userData.email);
+//     localStorage.setItem("userName", userData.name);
+//     localStorage.setItem("userId", userData.id.toString());
+//     localStorage.setItem("userRoles", JSON.stringify(userData.roles)); // store roles as JSON string
+
+//     return userData;
+//   } catch (error) {
+//     console.error("Error fetching user info:", error);
+//     throw error;
+//   }
+// };

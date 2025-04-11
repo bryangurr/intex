@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Identity.css";
 import "@fortawesome/fontawesome-free/css/all.css";
+// import { fetchAndStoreUserInfo } from "../api/MoviesAPI";
 
 function LoginPage() {
   // state variables for email and passwords
@@ -44,10 +45,10 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-      ?  "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
-        : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
-      // ?  "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true" // Comment out for localhost testing
-      // : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true"; // Comment out for localhost testing
+      ? // ?  "https://localhost:5000/login?useCookies=true" // Comment out for deployment or testing server
+        // : "https://localhost:5000/login?useSessionCookies=true"; // Comment out for deployment or testing server
+        "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useCookies=true" // Comment out for localhost testing
+      : "https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/login?useSessionCookies=true"; // Comment out for localhost testing
 
     try {
       const response = await fetch(loginUrl, {
@@ -68,6 +69,7 @@ function LoginPage() {
         throw new Error(data?.message || "Invalid email or password.");
       }
 
+      // await fetchAndStoreUserInfo(email);
       navigate("/movies");
     } catch (error: any) {
       setError(error.message || "Error logging in.");

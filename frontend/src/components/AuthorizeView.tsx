@@ -74,6 +74,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         });
         setAuthorized(true);
         console.log(authData.roles);
+        localStorage.setItem("userRoles", JSON.stringify(authData.roles)); // store roles as JSON string
       } catch (err) {
         console.error("Auth failed", err);
         setAuthorized(false);
