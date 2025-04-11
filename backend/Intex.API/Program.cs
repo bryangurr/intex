@@ -7,7 +7,6 @@ using DotNetEnv;
 
 Env.Load();
 
-Console.WriteLine("IDENTITY_CONNECTION: " + Environment.GetEnvironmentVariable("IDENTITY_CONNECTION"));
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +32,7 @@ builder.Services.AddDbContext<UserRecommendationsDbContext>(options =>
 
 builder.Services.AddAuthorization();
 
-// builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-//     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();

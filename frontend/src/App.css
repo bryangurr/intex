@@ -52,12 +52,12 @@ body {
 .read-the-docs {
   color: #888;
 }
-.dark-mode {
+/* .dark-mode { */
   /* If your site is already dark by default, you can keep this minimal. */
-  background-color: #111; 
-  color: white;
+  /* background-color: #111;  */
+  /* color: white; */
   /* ... etc. for dark mode overrides */
-}
+/* } */
 
 .light-mode {
   background-color: white;

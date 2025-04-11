@@ -53,14 +53,6 @@ namespace Intex.API.Controllers
 
         }
 
-        // [HttpGet("GetMovie")]
-        // public IActionResult GetMovie(int show_id)
-        // {
-        //     var movie = _moviesContext.movies_titles.Where(m => m.show_id == show_id);
-        //     return Ok(movie);
-
-        // }
-
         [HttpGet("GetMovie/{show_id}")]
         public IActionResult GetMovie(int show_id) {
             try {
@@ -339,8 +331,7 @@ namespace Intex.API.Controllers
                 // Then, confirm the user exists in your movies_users table
                 var moviesUser = await _moviesContext.movies_users.FirstOrDefaultAsync(mu => mu.email == email);
                 if (moviesUser == null)
-                    return NotFound("User email not found in movies_users table.");
-
+                    return NotFound(new { message = "User email not found in movies_users table." });
                 // Get role names (can be empty)
                 var userRoles = await (
                     from AspNetUserRoles in _moviesContext.UserRoles
@@ -387,15 +378,7 @@ namespace Intex.API.Controllers
             }
         }
         
-        // [HttpGet("GetFirst")]
-        // public IActionResult Get()
-        // {
-        //     try {
-        //         var result = _moviesContext.movies_titles.FirstOrDefault();
-        //         return Ok(result);
-        //     } catch (Exception err) {
-        //         return StatusCode(500, "Oops! Internal Server Error: " + err.Message);
-        //     }
+
 
         
     }
