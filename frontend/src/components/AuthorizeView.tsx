@@ -59,7 +59,11 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         );
 
         if (!authRes.ok) throw new Error("Unauthorized");
-
+        // ✅ Make sure response has a body before parsing
+        const contentType = authRes.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) {
+          throw new Error("Response is not JSON");
+        }
         const authData = await authRes.json();
         try {
           const userDetailsRes = await fetch(
@@ -79,7 +83,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         } catch {
           setUser({
             email: authData.email,
-            roles: [],
+            roles: ["None"],
             name: authData.email,
             id: 50,
           });
