@@ -71,12 +71,7 @@ namespace Intex.API.Controllers
             }
         }
 
-        //[HttpGet("GetAllMovies")]
-        //public IActionResult GetAllMovies()
-        //{
-        //    var movies = _moviesContext.movies_titles.Take(20).ToList();
-        //    return Ok(movies);
-        //}
+
 
         [HttpGet("GetAllMovies")]
         public IActionResult GetAllMovies(
@@ -298,9 +293,13 @@ namespace Intex.API.Controllers
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] movies_titles newMovie)
         {
+            try{
             _moviesContext.movies_titles.Add(newMovie);
             _moviesContext.SaveChanges();
             return Ok(newMovie);
+            } catch (Exception err) {
+                return StatusCode(500, "Failed to add movie, " + err);
+            }
         }
 
         // [Authorize(Roles = "Admin")]
