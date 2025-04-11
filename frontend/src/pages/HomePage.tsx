@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import WelcomeBand from "../components/WelcomeBand";
 import "../components/GenreCards.css";
+import ThemeToggle from "../components/ThemeToggle"; 
+import { useEffect, useState } from "react";
 
 const mockMovies = [
   {
@@ -23,6 +25,18 @@ const mockMovies = [
 
 function HomePage() {
   const navigate = useNavigate();
+  
+  
+  // -- ADD THESE 3 LINES --
+  const [theme, setTheme] = useState("dark");
+  useEffect(() => {
+    const match = document.cookie.match(/(^| )preferredTheme=([^;]+)/);
+    if (match && match[2]) setTheme(match[2]);
+  }, []);
+
+  // We'll compute which wrapper class to use:
+  const pageClass = theme === "dark" ? "dark-mode" : "light-mode";
+
 
   const handleLoginClick = () => {
     navigate("/login");
@@ -55,11 +69,14 @@ function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className={`${pageClass} min-h-screen bg-gray-900 text-white`}>
+    
       {/* Header */}
         <WelcomeBand />
 
       <br/><br/><br/>
+      {/* You could place the toggle button at the very top, or wherever you want */}
+     <ThemeToggle theme={theme} setTheme={setTheme} /> {/*Comment out when doing the actual presentation */}
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-800 to-blue-800 text-white text-center py-20 px-4">
         <h2 className="text-4xl font-bold mb-4">
