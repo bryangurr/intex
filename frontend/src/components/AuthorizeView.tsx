@@ -75,6 +75,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
             name: userDetails.name || "User",
             id: userDetails.id || -1,
           });
+          setAuthorized(true);
         } catch {
           setUser({
             email: authData.email,
