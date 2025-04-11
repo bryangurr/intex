@@ -364,6 +364,35 @@ namespace Intex.API.Controllers
             }
         }
 
+        [HttpGet("GetLastShowId")]
+        public IActionResult GetLastShowId() {
+            try {
+                var lastMovie = _moviesContext.movies_titles
+                    .OrderByDescending(m => m.show_id)
+                    .FirstOrDefault();
+
+                if (lastMovie == null)
+                {
+                    return NotFound("No movies found.");
+                }
+
+                return Ok(lastMovie.show_id); // Or return the whole movie if needed
+            } catch (Exception err) {
+                return StatusCode(500, "Oops! Internal Server Error: " + err.Message);
+            }
+        }
+        
+        // [HttpGet("GetFirst")]
+        // public IActionResult Get()
+        // {
+        //     try {
+        //         var result = _moviesContext.movies_titles.FirstOrDefault();
+        //         return Ok(result);
+        //     } catch (Exception err) {
+        //         return StatusCode(500, "Oops! Internal Server Error: " + err.Message);
+        //     }
+
+        
     }
 
 
