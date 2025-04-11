@@ -69,6 +69,7 @@ const MoviePage = () => {
 
   return (
     <AuthorizeView>
+
       <WelcomeBand />
 
       <div className="container" style={{ paddingTop: "100px" }}>
@@ -119,6 +120,7 @@ const MoviePage = () => {
           </div>
         </div>
       </div>
+
     </AuthorizeView>
   );
 };

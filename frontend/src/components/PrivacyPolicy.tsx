@@ -1,12 +1,11 @@
-import AuthorizeView from "./AuthorizeView";
 import WelcomeBand from "./WelcomeBand";
 
 const PrivacyPolicy = () => {
   return (
     <div>
-      <AuthorizeView>
+
         <WelcomeBand />
-      </AuthorizeView>
+
       <div className="container my-5">
         <div
           className="bg-white rounded-4 shadow p-5 mx-auto"
