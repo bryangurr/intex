@@ -69,8 +69,11 @@ function AuthorizeView(props: { children: React.ReactNode }) {
           const userDetailsRes = await fetch(
             `https://cineniche-intex-cdadeqcjgwgygpgy.eastus-01.azurewebsites.net/api/Movies/byEmail/${authData.email}`
           );
-          if (!userDetailsRes.ok)
-            throw new Error("Failed to fetch user details");
+          if (!userDetailsRes.ok) {
+            const rawText = await userDetailsRes.text();
+            console.warn("User not found:", rawText);
+            throw new Error("User not in movies_users table");
+          }
           const userDetails = await userDetailsRes.json();
 
           setUser({
