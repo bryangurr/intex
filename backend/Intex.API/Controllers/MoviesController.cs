@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Intex.API.Controllers
 {
@@ -53,13 +55,6 @@ namespace Intex.API.Controllers
 
         }
 
-        // [HttpGet("GetMovie")]
-        // public IActionResult GetMovie(int show_id)
-        // {
-        //     var movie = _moviesContext.movies_titles.Where(m => m.show_id == show_id);
-        //     return Ok(movie);
-
-        // }
 
         [HttpGet("GetMovie/{show_id}")]
         public IActionResult GetMovie(int show_id) {
@@ -239,7 +234,7 @@ namespace Intex.API.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateMovie/{show_id}")]
         public IActionResult UpdateMovie(int show_id, [FromBody] movies_titles updatedMovie)
         {
@@ -298,6 +293,8 @@ namespace Intex.API.Controllers
 
             return Ok(existingMovie);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] movies_titles newMovie)
         {
@@ -305,6 +302,8 @@ namespace Intex.API.Controllers
             _moviesContext.SaveChanges();
             return Ok(newMovie);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteMovie/{show_id}")]
         public IActionResult DeleteMovie(int show_id)
         {
