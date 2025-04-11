@@ -195,7 +195,6 @@ function HomePage() {
             ))}
           </div>
         </div>
-        <img src="https://www.vecteezy.com/free-photos/beautiful-picture" />
       </section>
 
       {/* Subscription Section */}
