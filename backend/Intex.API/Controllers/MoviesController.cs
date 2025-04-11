@@ -76,12 +76,7 @@ namespace Intex.API.Controllers
             }
         }
 
-        //[HttpGet("GetAllMovies")]
-        //public IActionResult GetAllMovies()
-        //{
-        //    var movies = _moviesContext.movies_titles.Take(20).ToList();
-        //    return Ok(movies);
-        //}
+
 
         [HttpGet("GetAllMovies")]
         public IActionResult GetAllMovies(
@@ -239,7 +234,7 @@ namespace Intex.API.Controllers
             return Ok(result);
         }
 
-
+        // [Authorize(Roles = "Admin")]
         [HttpPut("UpdateMovie/{show_id}")]
         public IActionResult UpdateMovie(int show_id, [FromBody] movies_titles updatedMovie)
         {
@@ -298,13 +293,21 @@ namespace Intex.API.Controllers
 
             return Ok(existingMovie);
         }
+
+        // [Authorize(Roles = "Admin")]
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] movies_titles newMovie)
         {
+            try{
             _moviesContext.movies_titles.Add(newMovie);
             _moviesContext.SaveChanges();
             return Ok(newMovie);
+            } catch (Exception err) {
+                return StatusCode(500, "Failed to add movie, " + err);
+            }
         }
+
+        // [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteMovie/{show_id}")]
         public IActionResult DeleteMovie(int show_id)
         {
@@ -366,6 +369,35 @@ namespace Intex.API.Controllers
             }
         }
 
+        [HttpGet("GetLastShowId")]
+        public IActionResult GetLastShowId() {
+            try {
+                var lastMovie = _moviesContext.movies_titles
+                    .OrderByDescending(m => m.show_id)
+                    .FirstOrDefault();
+
+                if (lastMovie == null)
+                {
+                    return NotFound("No movies found.");
+                }
+
+                return Ok(lastMovie.show_id); // Or return the whole movie if needed
+            } catch (Exception err) {
+                return StatusCode(500, "Oops! Internal Server Error: " + err.Message);
+            }
+        }
+        
+        // [HttpGet("GetFirst")]
+        // public IActionResult Get()
+        // {
+        //     try {
+        //         var result = _moviesContext.movies_titles.FirstOrDefault();
+        //         return Ok(result);
+        //     } catch (Exception err) {
+        //         return StatusCode(500, "Oops! Internal Server Error: " + err.Message);
+        //     }
+
+        
     }
 
 

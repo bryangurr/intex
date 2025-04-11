@@ -119,8 +119,8 @@ const NewMovieForm = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addMovie(formData);
-      onSuccess(formData);
+      const added = await addMovie(formData);
+      onSuccess(added); // This has the real show_id
     } catch (error) {
       console.error("Error adding movie:", error);
     }
@@ -345,8 +345,11 @@ const NewMovieForm = ({
         >
           Cancel
         </button>
-        <button type="submit" className="btn"
-        style= {{backgroundColor: "#6f42c1", color: "white"}}>
+        <button
+          type="submit"
+          className="btn"
+          style={{ backgroundColor: "#6f42c1", color: "white" }}
+        >
           Save Movie
         </button>
       </div>

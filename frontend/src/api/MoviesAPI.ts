@@ -47,13 +47,24 @@ export const fetchMovies = async (
 
 export const addMovie = async (newMovie: Movie): Promise<Movie> => {
   try {
+    const show_response = await fetch(`${API_URL}/GetLastShowId`);
+    if (!show_response.ok) {
+      throw new Error("Failed to fetch last show_id");
+    }
+
+    const lastShowId = await show_response.json(); // assuming just a number is returned
+    if (typeof lastShowId !== "number") {
+      throw new Error("Invalid show_id received from server");
+    }
+    const movieToAdd = { ...newMovie, show_id: lastShowId + 1 };
+
     const response = await fetch(`${API_URL}/AddMovie`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include", // 👈 required for sending auth cookies
-      body: JSON.stringify(newMovie),
+      body: JSON.stringify(movieToAdd),
     });
 
     if (!response.ok) {
